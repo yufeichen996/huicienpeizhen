@@ -1,0 +1,172 @@
+.tasks-page {
+  padding-top: 20rpx;
+}
+
+.filter-card {
+  padding: 10rpx;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6rpx;
+}
+
+.filter-item {
+  min-height: 84rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20rpx;
+  color: var(--color-text-secondary);
+}
+
+.filter-item.active {
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.filter-label,
+.filter-count {
+  display: block;
+}
+
+.filter-label {
+  font-size: 22rpx;
+  font-weight: 650;
+}
+
+.filter-count {
+  margin-top: 3rpx;
+  font-size: 20rpx;
+  font-variant-numeric: tabular-nums;
+}
+
+.loading-state {
+  padding: 160rpx 0;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.task-list {
+  margin-top: 22rpx;
+}
+
+.list-task-card {
+  margin-bottom: 20rpx;
+  padding: 28rpx;
+}
+
+.task-card-head,
+.task-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.task-order {
+  color: var(--color-text-tertiary);
+  font-size: 20rpx;
+}
+
+.task-name,
+.task-time {
+  display: block;
+}
+
+.task-name {
+  margin-top: 22rpx;
+  font-size: 34rpx;
+  font-weight: 750;
+}
+
+.task-time {
+  margin-top: 8rpx;
+  color: var(--color-primary);
+  font-size: 25rpx;
+  font-weight: 650;
+}
+
+.task-location {
+  margin-top: 22rpx;
+  padding: 20rpx;
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  border-radius: 20rpx;
+  background: var(--color-page);
+}
+
+.task-location text {
+  display: block;
+  font-size: 23rpx;
+  line-height: 36rpx;
+}
+
+.task-location text:last-child {
+  color: var(--color-text-secondary);
+}
+
+.location-mark {
+  width: 20rpx;
+  height: 20rpx;
+  margin-top: 7rpx;
+  flex: none;
+  border: 5rpx solid var(--color-primary);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+}
+
+.task-card-foot {
+  min-height: 70rpx;
+  margin-top: 12rpx;
+  color: var(--color-text-secondary);
+  font-size: 22rpx;
+}
+
+.task-link {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.task-link text {
+  margin-left: 5rpx;
+  font-size: 30rpx;
+}
+
+.empty-card {
+  margin-top: 22rpx;
+  padding: 80rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.empty-mark {
+  width: 88rpx;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 28rpx;
+  background: var(--color-primary-soft);
+}
+
+.empty-mark view {
+  width: 28rpx;
+  height: 34rpx;
+  border: 5rpx solid var(--color-primary);
+  border-radius: 8rpx;
+}
+
+.empty-title {
+  margin-top: 24rpx;
+  font-size: 29rpx;
+  font-weight: 700;
+}
+
+.empty-desc {
+  margin-top: 10rpx;
+  color: var(--color-text-secondary);
+  font-size: 22rpx;
+  line-height: 36rpx;
+}

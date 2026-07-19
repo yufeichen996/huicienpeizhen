@@ -1,0 +1,362 @@
+{
+  "name": "Huicien Care Icons",
+  "version": "3.0.0",
+  "style": "reference-rounded-outline-and-filled-selected",
+  "reference": "用户提供的陪诊小程序功能图标设计风格",
+  "tokens": {
+    "primary": "#1261D3",
+    "primaryDark": "#0B3F91",
+    "tileBackground": "#FBFDFF",
+    "tileBorder": "#DCE8F6",
+    "unselected": "#697386",
+    "iconGrid": "24x24",
+    "defaultStrokeWidth": 2.05,
+    "tileCanvas": "72x72",
+    "tileRadius": 17
+  },
+  "count": 67,
+  "icons": [
+    {
+      "name": "appointment",
+      "zh": "立即预约",
+      "category": "参考核心12枚"
+    },
+    {
+      "name": "companion",
+      "zh": "找陪诊员",
+      "category": "首页主入口"
+    },
+    {
+      "name": "medicine",
+      "zh": "代取药物",
+      "category": "首页主入口"
+    },
+    {
+      "name": "report",
+      "zh": "报告解读",
+      "category": "首页主入口"
+    },
+    {
+      "name": "full-companion",
+      "zh": "全程陪诊",
+      "category": "服务"
+    },
+    {
+      "name": "exam-companion",
+      "zh": "检查陪同",
+      "category": "服务"
+    },
+    {
+      "name": "medicine-pickup",
+      "zh": "代取药物",
+      "category": "服务"
+    },
+    {
+      "name": "report-analysis",
+      "zh": "报告解读",
+      "category": "服务"
+    },
+    {
+      "name": "report-delivery",
+      "zh": "取送报告",
+      "category": "服务"
+    },
+    {
+      "name": "inpatient-care",
+      "zh": "住院陪护",
+      "category": "服务"
+    },
+    {
+      "name": "hospital",
+      "zh": "医院",
+      "category": "医疗机构"
+    },
+    {
+      "name": "hospital-building",
+      "zh": "医院建筑",
+      "category": "医疗机构"
+    },
+    {
+      "name": "department",
+      "zh": "科室",
+      "category": "医疗机构"
+    },
+    {
+      "name": "doctor",
+      "zh": "医生",
+      "category": "医疗机构"
+    },
+    {
+      "name": "medical-cross",
+      "zh": "医疗十字",
+      "category": "医疗机构"
+    },
+    {
+      "name": "home",
+      "zh": "首页",
+      "category": "参考核心12枚"
+    },
+    {
+      "name": "booking",
+      "zh": "预约",
+      "category": "底部导航"
+    },
+    {
+      "name": "orders",
+      "zh": "订单",
+      "category": "参考核心12枚"
+    },
+    {
+      "name": "profile",
+      "zh": "我的",
+      "category": "底部导航"
+    },
+    {
+      "name": "patient",
+      "zh": "就诊人管理",
+      "category": "参考核心12枚"
+    },
+    {
+      "name": "favorite",
+      "zh": "我的收藏",
+      "category": "我的页"
+    },
+    {
+      "name": "coupon",
+      "zh": "优惠券",
+      "category": "我的页"
+    },
+    {
+      "name": "address",
+      "zh": "常用地址",
+      "category": "我的页"
+    },
+    {
+      "name": "customer-service",
+      "zh": "联系客服",
+      "category": "参考核心12枚"
+    },
+    {
+      "name": "feedback",
+      "zh": "意见反馈",
+      "category": "我的页"
+    },
+    {
+      "name": "agreement",
+      "zh": "服务协议",
+      "category": "我的页"
+    },
+    {
+      "name": "privacy",
+      "zh": "隐私政策",
+      "category": "我的页"
+    },
+    {
+      "name": "security",
+      "zh": "账号与安全",
+      "category": "我的页"
+    },
+    {
+      "name": "about",
+      "zh": "关于我们",
+      "category": "我的页"
+    },
+    {
+      "name": "logout",
+      "zh": "退出登录",
+      "category": "我的页"
+    },
+    {
+      "name": "verified",
+      "zh": "实名认证",
+      "category": "信任状态"
+    },
+    {
+      "name": "shield",
+      "zh": "服务保障",
+      "category": "信任状态"
+    },
+    {
+      "name": "rating",
+      "zh": "好评率",
+      "category": "信任状态"
+    },
+    {
+      "name": "success",
+      "zh": "成功",
+      "category": "信任状态"
+    },
+    {
+      "name": "warning",
+      "zh": "警告",
+      "category": "信任状态"
+    },
+    {
+      "name": "info",
+      "zh": "提示",
+      "category": "信任状态"
+    },
+    {
+      "name": "pending",
+      "zh": "待处理",
+      "category": "信任状态"
+    },
+    {
+      "name": "in-progress",
+      "zh": "进行中",
+      "category": "信任状态"
+    },
+    {
+      "name": "completed",
+      "zh": "已完成",
+      "category": "信任状态"
+    },
+    {
+      "name": "cancelled",
+      "zh": "已取消",
+      "category": "信任状态"
+    },
+    {
+      "name": "search",
+      "zh": "搜索",
+      "category": "通用操作"
+    },
+    {
+      "name": "message",
+      "zh": "消息",
+      "category": "通用操作"
+    },
+    {
+      "name": "notification",
+      "zh": "通知",
+      "category": "参考核心12枚"
+    },
+    {
+      "name": "calendar",
+      "zh": "日期",
+      "category": "通用操作"
+    },
+    {
+      "name": "clock",
+      "zh": "时间",
+      "category": "通用操作"
+    },
+    {
+      "name": "location",
+      "zh": "位置",
+      "category": "通用操作"
+    },
+    {
+      "name": "payment",
+      "zh": "支付",
+      "category": "通用操作"
+    },
+    {
+      "name": "phone",
+      "zh": "电话",
+      "category": "通用操作"
+    },
+    {
+      "name": "back",
+      "zh": "返回",
+      "category": "通用操作"
+    },
+    {
+      "name": "chevron-right",
+      "zh": "右箭头",
+      "category": "通用操作"
+    },
+    {
+      "name": "close",
+      "zh": "关闭",
+      "category": "通用操作"
+    },
+    {
+      "name": "add",
+      "zh": "新增",
+      "category": "通用操作"
+    },
+    {
+      "name": "edit",
+      "zh": "编辑",
+      "category": "通用操作"
+    },
+    {
+      "name": "delete",
+      "zh": "删除",
+      "category": "通用操作"
+    },
+    {
+      "name": "filter",
+      "zh": "筛选",
+      "category": "通用操作"
+    },
+    {
+      "name": "sort",
+      "zh": "排序",
+      "category": "通用操作"
+    },
+    {
+      "name": "camera",
+      "zh": "拍照",
+      "category": "通用操作"
+    },
+    {
+      "name": "upload",
+      "zh": "上传",
+      "category": "通用操作"
+    },
+    {
+      "name": "service-item",
+      "zh": "服务项目",
+      "category": "参考核心12枚"
+    },
+    {
+      "name": "order-detail",
+      "zh": "订单详情",
+      "category": "参考核心12枚"
+    },
+    {
+      "name": "hospital-navigation",
+      "zh": "医院导航",
+      "category": "参考核心12枚"
+    },
+    {
+      "name": "companion-plus",
+      "zh": "陪诊师",
+      "category": "参考核心12枚"
+    },
+    {
+      "name": "wechat-payment",
+      "zh": "微信支付",
+      "category": "参考核心12枚"
+    },
+    {
+      "name": "personal-center",
+      "zh": "个人中心",
+      "category": "参考核心12枚"
+    },
+    {
+      "name": "care-service",
+      "zh": "陪护服务",
+      "category": "服务"
+    },
+    {
+      "name": "elder-care",
+      "zh": "老人陪护",
+      "category": "服务"
+    },
+    {
+      "name": "wheelchair",
+      "zh": "轮椅协助",
+      "category": "服务"
+    }
+  ],
+  "tabStates": [
+    "home",
+    "booking",
+    "orders",
+    "message",
+    "profile"
+  ]
+}

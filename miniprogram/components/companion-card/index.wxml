@@ -1,0 +1,20 @@
+<button class="companion-card tap-feedback" bindtap="onTap" aria-label="查看{{companion.name}}详情">
+  <view class="card-top">
+    <image class="avatar" src="{{companion.avatar}}" mode="aspectFill" aria-label="{{companion.name}}头像" />
+    <view class="main-copy">
+      <view class="name-row">
+        <text class="name">{{companion.name}}</text>
+        <view class="rating"><app-icon name="rating" variant="outline" size="24" label="评分" /><text>{{companion.rating}}</text></view>
+      </view>
+      <text class="meta">{{companion.serviceCount}} 次服务 · 响应 {{companion.responseTime}}</text>
+      <view class="tag-row">
+        <text wx:for="{{companion.tags}}" wx:key="*this" class="tag">{{item}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="divider"></view>
+  <view class="card-bottom">
+    <text class="bio">{{companion.bio}}</text>
+    <view class="price"><text class="currency">¥</text><text class="amount">{{companion.priceFrom}}</text><text class="unit"> 起/次</text></view>
+  </view>
+</button>

@@ -1,0 +1,81 @@
+<view class="page-shell profile-page">
+  <view wx:if="{{loading && !profile}}" class="loading-state">正在加载个人信息…</view>
+
+  <block wx:if="{{profile}}">
+    <view class="identity-card card">
+      <view class="avatar-mark">
+        <view class="avatar-head"></view>
+        <view class="avatar-body"></view>
+      </view>
+      <view class="identity-copy">
+        <view class="name-row">
+          <text>{{profile.name}}</text>
+          <view class="verified-badge">已实名</view>
+        </view>
+        <text>{{profile.phoneMasked}}</text>
+        <view class="availability-label {{availabilityTone}}">{{availabilityText}}</view>
+      </view>
+    </view>
+
+    <view class="service-stats card">
+      <view><text>{{profile.serviceCount}}</text><text>累计服务</text></view>
+      <view><text>{{profile.serviceSkills.length}}</text><text>认证技能</text></view>
+      <view><text>{{profile.serviceHospitals.length}}</text><text>服务医院</text></view>
+    </view>
+
+    <view class="profile-section">
+      <text class="section-label">工作管理</text>
+      <view class="menu-card card">
+        <button class="menu-row tap-feedback" data-action="schedule" bindtap="openMenu">
+          <view class="menu-icon blue"><view class="calendar-shape"></view></view>
+          <view class="menu-copy"><text>排班设置</text><text>设置未来 7 天可服务时间</text></view>
+          <text class="menu-arrow">›</text>
+        </button>
+        <button class="menu-row tap-feedback" data-action="capabilities" bindtap="openMenu">
+          <view class="menu-icon green"><view class="skill-shape"></view></view>
+          <view class="menu-copy"><text>能力与服务范围</text><text>查看认证技能和医院范围</text></view>
+          <text class="menu-arrow">›</text>
+        </button>
+        <button class="menu-row tap-feedback" data-action="settlements" bindtap="openMenu">
+          <view class="menu-icon orange"><view class="settlement-shape"></view></view>
+          <view class="menu-copy"><text>收入与结算</text><text>查看平台生成的结算明细</text></view>
+          <text class="menu-arrow">›</text>
+        </button>
+        <button class="menu-row tap-feedback" data-action="exceptions" bindtap="openMenu">
+          <view class="menu-icon red"><view class="exception-shape"></view></view>
+          <view class="menu-copy"><text>异常工单</text><text>查看待处理和历史异常记录</text></view>
+          <text class="menu-arrow">›</text>
+        </button>
+      </view>
+    </view>
+
+    <view class="profile-section">
+      <text class="section-label">成长与质量</text>
+      <view class="menu-card card">
+        <button class="menu-row tap-feedback" data-action="training" bindtap="openMenu">
+          <view class="menu-icon purple"><view class="training-shape"></view></view>
+          <view class="menu-copy"><text>培训中心</text><text>学习服务边界、安全和隐私规范</text></view>
+          <text class="menu-arrow">›</text>
+        </button>
+        <button class="menu-row tap-feedback" data-action="quality" bindtap="openMenu">
+          <view class="menu-icon green"><view class="quality-shape"></view></view>
+          <view class="menu-copy"><text>服务质量</text><text>查看准时率、完成率和脱敏反馈</text></view>
+          <text class="menu-arrow">›</text>
+        </button>
+      </view>
+    </view>
+
+    <view class="profile-section">
+      <text class="section-label">服务与安全</text>
+      <view class="menu-card compact card">
+        <button class="menu-row tap-feedback" data-action="notifications" bindtap="openMenu"><text>消息通知</text><text class="menu-arrow">›</text></button>
+        <button class="menu-row tap-feedback" data-action="support" bindtap="openMenu"><text>联系平台</text><text class="menu-arrow">›</text></button>
+        <button class="menu-row tap-feedback" data-action="rules" bindtap="openMenu"><text>服务规范</text><text class="menu-arrow">›</text></button>
+        <button class="menu-row tap-feedback" data-action="privacy" bindtap="openMenu"><text>隐私政策</text><text class="menu-arrow">›</text></button>
+        <button class="menu-row tap-feedback" data-action="security" bindtap="openMenu"><text>账号安全</text><text class="menu-arrow">›</text></button>
+      </view>
+    </view>
+
+    <button class="logout-button tap-feedback" bindtap="logout">退出登录</button>
+  </block>
+</view>

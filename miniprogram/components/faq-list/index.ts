@@ -1,0 +1,1 @@
+Component({properties:{items:{type:Array,value:[]}},data:{active:-1},methods:{toggle(e:WechatMiniprogram.TouchEvent){const index=Number(e.currentTarget.dataset.index);this.setData({active:this.data.active===index?-1:index})}}})

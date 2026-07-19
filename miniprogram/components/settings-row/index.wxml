@@ -1,0 +1,6 @@
+<view class="row {{last ? 'last' : ''}} tap-feedback" bindtap="tap">
+  <view class="icon"><app-icon name="{{icon}}" variant="{{variant}}" size="60" label="{{title}}" /></view>
+  <text class="title">{{title}}</text>
+  <text class="value">{{value}}</text>
+  <view class="arrow"><app-icon name="chevron-right" variant="outline" size="28" /></view>
+</view>

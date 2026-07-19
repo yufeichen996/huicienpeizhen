@@ -1,0 +1,1 @@
+<button class="favorite {{favorited ? 'active' : ''}} tap-feedback" bindtap="toggle"><app-icon name="favorite" color="{{favorited ? 'blue' : 'gray'}}" size="18" label="收藏"/><text wx:if="{{label}}">{{favorited ? '已收藏' : '收藏'}}</text></button>

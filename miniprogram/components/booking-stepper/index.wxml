@@ -1,0 +1,7 @@
+<view class="stepper">
+  <view class="step {{index + 1 < current ? 'done' : ''}} {{index + 1 === current ? 'current' : ''}}" wx:for="{{steps}}" wx:key="*this">
+    <view class="line" wx:if="{{index > 0}}"></view>
+    <view class="dot">{{index + 1 < current ? '✓' : index + 1}}</view>
+    <text class="label">{{item}}</text>
+  </view>
+</view>

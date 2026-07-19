@@ -1,0 +1,11 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "app-card": "/components/app-card/index",
+    "app-icon": "/components/app-icon/index",
+    "custom-navbar": "/components/custom-navbar/index",
+    "companion-card": "/components/companion-card/index",
+    "hospital-chip": "/components/hospital-chip/index",
+    "bottom-sheet": "/components/bottom-sheet/index"
+  }
+}

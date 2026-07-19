@@ -1,0 +1,43 @@
+<view class="page-shell schedule-page">
+  <view wx:if="{{loading && !schedule}}" class="loading-state">正在加载未来排班…</view>
+
+  <block wx:if="{{schedule}}">
+    <view class="schedule-summary card">
+      <view>
+        <text>未来 7 天</text>
+        <text>可服务 {{availableCount}} 天</text>
+      </view>
+      <view class="timezone-label">{{schedule.timezone}}</view>
+    </view>
+
+    <view class="schedule-card card">
+      <view
+        wx:for="{{schedule.days}}"
+        wx:key="date"
+        class="schedule-row {{item.hasTask ? 'has-task' : ''}}"
+      >
+        <view class="date-block">
+          <text>{{item.weekDay}}</text>
+          <text>{{item.dayNumber}}</text>
+        </view>
+        <view class="day-copy">
+          <text>{{item.hasTask ? '已有服务任务' : (item.available ? '可接受平台派单' : '本日休息')}}</text>
+          <text>{{item.hasTask ? item.taskTime + ' 开始服务，不能关闭' : (item.available ? '平台可按能力与时间匹配任务' : '不会接收该日期的新任务')}}</text>
+        </view>
+        <switch
+          checked="{{item.available}}"
+          color="#21A366"
+          disabled="{{item.hasTask || actionDate === item.date}}"
+          data-date="{{item.date}}"
+          bindchange="onAvailabilityChange"
+        />
+      </view>
+    </view>
+
+    <view class="schedule-notice">
+      <text>排班规则</text>
+      <text>{{schedule.notice}}</text>
+      <text>修改排班不会取消已经接受的任务，如有冲突请联系平台调度。</text>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,2 @@
+import { profileDataStore } from '../stores/profile'; import { userService } from './user'; import type { FavoriteItem,FavoriteType } from '../types/profile'
+export const favoriteService={isFavorite(type:FavoriteType,targetId:string){return profileDataStore.listFavorites(type).some(i=>i.targetId===targetId)},toggle(item:FavoriteItem){if(!userService.requireLogin())return{loginRequired:true,favorited:false};return{loginRequired:false,favorited:profileDataStore.toggleFavorite(item)}},list:(type?:FavoriteType)=>profileDataStore.listFavorites(type)}

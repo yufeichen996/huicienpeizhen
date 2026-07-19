@@ -1,0 +1,66 @@
+{
+  "pages": [
+    "pages/login/index",
+    "pages/registration/index",
+    "pages/review-status/index",
+    "pages/workbench/index",
+    "pages/order-hall/index",
+    "pages/tasks/index",
+    "pages/messages/index",
+    "pages/profile/index",
+    "pages/notification-settings/index",
+    "pages/task-detail/index",
+    "pages/service-execution/index",
+    "pages/service-summary/index",
+    "pages/exception-report/index",
+    "pages/exceptions/index",
+    "pages/expense-record/index",
+    "pages/capabilities/index",
+    "pages/schedule/index",
+    "pages/settlements/index",
+    "pages/training/index",
+    "pages/quality/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "汇慈恩陪诊师",
+    "navigationBarBackgroundColor": "#F4F7FB",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F4F7FB",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#98A1B2",
+    "selectedColor": "#1261D3",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/workbench/index",
+        "text": "工作台",
+        "iconPath": "assets/tab/workbench.png",
+        "selectedIconPath": "assets/tab/workbench-active.png"
+      },
+      {
+        "pagePath": "pages/tasks/index",
+        "text": "任务",
+        "iconPath": "assets/tab/tasks.png",
+        "selectedIconPath": "assets/tab/tasks-active.png"
+      },
+      {
+        "pagePath": "pages/messages/index",
+        "text": "消息",
+        "iconPath": "assets/tab/messages.png",
+        "selectedIconPath": "assets/tab/messages-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "assets/tab/profile.png",
+        "selectedIconPath": "assets/tab/profile-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

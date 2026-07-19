@@ -1,0 +1,9 @@
+<image
+  class="app-icon"
+  src="{{src}}"
+  mode="aspectFit"
+  style="width:{{size}}{{sizeUnit}};height:{{size}}{{sizeUnit}}"
+  aria-role="img"
+  aria-label="{{accessibleLabel}}"
+  binderror="error"
+/>

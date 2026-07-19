@@ -1,0 +1,1 @@
+{ "component": true, "usingComponents": { "order-status": "/components/order-status/index", "order-actions": "/components/order-actions/index" } }

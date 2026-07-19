@@ -1,0 +1,1 @@
+Component({properties:{service:{type:Object,value:{}}},methods:{detail(){this.triggerEvent('detail',{id:(this.properties.service as {id:string}).id})},book(){this.triggerEvent('book',{id:(this.properties.service as {id:string}).id})},favorite(){this.triggerEvent('favorite',{id:(this.properties.service as {id:string}).id})}}})

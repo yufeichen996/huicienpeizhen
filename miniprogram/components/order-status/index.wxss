@@ -1,0 +1,1 @@
+@import "/styles/tokens.wxss";.status{display:flex;align-items:center;gap:10rpx;font-size:23rpx;font-weight:650}.dot{width:13rpx;height:13rpx;border-radius:50%;background:currentColor}.blue{color:var(--color-primary)}.purple{color:var(--color-purple)}.green{color:var(--color-green)}.orange{color:var(--color-orange)}.gray{color:var(--color-text-tertiary)}

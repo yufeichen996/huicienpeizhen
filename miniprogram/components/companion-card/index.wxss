@@ -1,0 +1,41 @@
+@import "/styles/tokens.wxss";
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.companion-card {
+  width: 100% !important;
+  min-width: 0;
+  min-height: 326rpx;
+  margin: 0 !important;
+  padding: var(--card-padding);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  text-align: left;
+  border: 1rpx solid rgba(60, 60, 67, 0.06);
+  border-radius: var(--radius-card);
+  background: var(--color-card);
+  box-shadow: var(--shadow-card);
+}
+
+.card-top { display: flex; align-items: flex-start; }
+.avatar { width: var(--avatar-size); height: var(--avatar-size); flex: none; border-radius: 50%; background: var(--color-primary-soft); }
+.main-copy { min-width: 0; margin-left: 22rpx; flex: 1; }
+.name-row { display: flex; align-items: center; justify-content: space-between; }
+.name { color: var(--color-text-primary); font-size: 32rpx; line-height: 42rpx; font-weight: 700; }
+.rating { display: flex; align-items: center; gap: 6rpx; color: var(--color-orange); font-size: 24rpx; line-height: 34rpx; font-weight: 700; }
+.meta { display: block; margin-top: 6rpx; color: var(--color-text-secondary); font-size: 23rpx; line-height: 32rpx; }
+.tag-row { margin-top: 14rpx; display: flex; flex-wrap: wrap; gap: 8rpx; }
+.tag { padding: 7rpx 12rpx; border-radius: var(--radius-pill); color: var(--color-primary); background: var(--color-primary-soft); font-size: 21rpx; line-height: 26rpx; font-weight: 500; }
+.divider { height: 1rpx; margin: 24rpx 0 20rpx; background: var(--color-divider); }
+.card-bottom { display: flex; align-items: flex-end; gap: 20rpx; }
+.bio { min-width: 0; flex: 1; display: -webkit-box; overflow: hidden; color: var(--color-text-secondary); font-size: 24rpx; line-height: 36rpx; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.price { flex: none; color: var(--color-primary); white-space: nowrap; }
+.currency { font-size: 22rpx; font-weight: 700; }
+.amount { font-size: 36rpx; font-weight: 750; }
+.unit { color: var(--color-text-secondary); font-size: 20rpx; }

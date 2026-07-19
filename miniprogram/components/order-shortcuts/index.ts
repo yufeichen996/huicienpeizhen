@@ -1,0 +1,1 @@
+Component({properties:{items:{type:Array,value:[]}},methods:{tap(e:WechatMiniprogram.TouchEvent){this.triggerEvent('select',{filter:e.currentTarget.dataset.filter})},all(){this.triggerEvent('select',{filter:'ALL'})}}})

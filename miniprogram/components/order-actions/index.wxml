@@ -1,0 +1,1 @@
+<view class="actions"><button class="action {{item.style}} tap-feedback" wx:for="{{actions}}" wx:key="type" data-type="{{item.type}}" loading="{{busy && item.style === 'primary'}}" bindtap="onAction">{{item.text}}</button></view>

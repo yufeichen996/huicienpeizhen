@@ -1,0 +1,1 @@
+@import "/styles/tokens.wxss";.group{padding:0 var(--card-padding);border-radius:var(--radius-card);background:#fff;box-shadow:var(--shadow-card);overflow:hidden}

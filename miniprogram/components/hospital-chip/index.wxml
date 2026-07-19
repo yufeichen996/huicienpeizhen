@@ -1,0 +1,4 @@
+<button class="hospital-chip tap-feedback" bindtap="onTap" aria-label="{{hospital.name}}">
+  <view class="hospital-icon"><app-icon name="hospital-building" variant="outline" size="40" label="医院" /></view>
+  <text class="hospital-name">{{hospital.shortName}}</text>
+</button>

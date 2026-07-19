@@ -1,0 +1,13 @@
+node_modules/
+miniprogram_npm/
+project.private.config.json
+miniprogram/project.config.json
+.DS_Store
+*.log
+server/.data/
+server/.logs/
+server/.uploads/
+dist/
+.env
+.env.local
+.env.production

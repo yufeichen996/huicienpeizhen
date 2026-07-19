@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#B9DDFF"/><stop offset="1" stop-color="#EAF5FF"/></linearGradient></defs>
+  <rect width="800" height="480" rx="44" fill="url(#bg)"/>
+  <circle cx="650" cy="88" r="104" fill="#fff" opacity=".32"/>
+  <rect x="390" y="116" width="284" height="264" rx="22" fill="#fff"/>
+  <rect x="482" y="58" width="100" height="100" rx="22" fill="#007AFF"/>
+  <path d="M532 78v60M502 108h60" stroke="#fff" stroke-width="18" stroke-linecap="round"/>
+  <g fill="#B9DDFF"><rect x="428" y="164" width="48" height="52" rx="8"/><rect x="504" y="164" width="48" height="52" rx="8"/><rect x="580" y="164" width="48" height="52" rx="8"/><rect x="428" y="244" width="48" height="52" rx="8"/><rect x="580" y="244" width="48" height="52" rx="8"/></g>
+  <rect x="505" y="268" width="54" height="112" rx="12" fill="#DDEEFF"/>
+  <path d="M320 380h420" stroke="#8FC7FA" stroke-width="16" stroke-linecap="round"/>
+</svg>

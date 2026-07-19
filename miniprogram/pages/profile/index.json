@@ -1,0 +1,1 @@
+{ "navigationStyle":"custom", "usingComponents": { "custom-navbar":"/components/custom-navbar/index", "profile-header":"/components/profile-header/index", "order-shortcuts":"/components/order-shortcuts/index", "settings-group":"/components/settings-group/index", "settings-row":"/components/settings-row/index", "login-sheet":"/components/login-sheet/index" } }

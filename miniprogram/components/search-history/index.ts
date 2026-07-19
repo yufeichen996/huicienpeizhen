@@ -1,0 +1,1 @@
+Component({properties:{items:{type:Array,value:[]}},methods:{select(e:WechatMiniprogram.TouchEvent){this.triggerEvent('select',{value:e.currentTarget.dataset.value})},remove(e:WechatMiniprogram.TouchEvent){this.triggerEvent('remove',{value:e.currentTarget.dataset.value})},clear(){this.triggerEvent('clear')}}})

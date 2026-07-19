@@ -1,0 +1,1 @@
+{ "navigationStyle":"custom", "usingComponents": { "custom-navbar":"/components/custom-navbar/index", "patient-card":"/components/patient-card/index", "empty-state":"/components/empty-state/index" } }

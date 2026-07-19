@@ -1,0 +1,33 @@
+<view class="safe-page book-page">
+  <custom-navbar eyebrow="汇慈恩陪诊" title="预约服务" />
+  <view class="book-content">
+    <view class="intro"><text class="intro-title">四步完成陪诊预约</text><text class="intro-note">信息会自动保存，随时退出也能回来继续</text></view>
+    <view class="draft-card" wx:if="{{hasDraft}}">
+      <view><text class="draft-kicker">上次预约未完成</text><text class="draft-summary">{{draftSummary || '已保存部分预约信息'}}</text></view>
+      <button class="draft-link" bindtap="onStart">继续填写 <app-icon name="chevron-right" variant="outline" size="28" /></button>
+    </view>
+    <view class="steps-card">
+      <view class="step" wx:for="{{steps}}" wx:key="no"><text class="step-no">{{item.no}}</text><view><text class="step-name">{{item.name}}</text><text class="step-note">{{item.note}}</text></view></view>
+    </view>
+    <view class="section-head"><text>推荐服务</text><text class="section-tip">价格透明 · 全程保障</text></view>
+    <view class="service-grid">
+      <view class="service-card tap-feedback" wx:for="{{services}}" wx:key="id" data-id="{{item.id}}" bindtap="onService">
+        <view class="service-icon"><app-icon name="{{item.iconName}}" variant="tile" size="64" label="{{item.name}}" /></view>
+        <text class="service-name">{{item.name}}</text>
+        <text class="service-price">¥{{item.priceText}}起</text>
+      </view>
+    </view>
+    <block wx:if="{{hospitals.length}}">
+      <view class="section-head"><text>最近常选医院</text></view>
+      <view class="hospital-list">
+        <view class="hospital-row tap-feedback" wx:for="{{hospitals}}" wx:key="id" data-id="{{item.id}}" bindtap="onHospital">
+          <view class="hospital-icon"><app-icon name="hospital-building" variant="outline" size="40" label="医院" /></view>
+          <text class="hospital-name">{{item.name}}</text>
+          <view class="arrow"><app-icon name="chevron-right" variant="outline" size="28" /></view>
+        </view>
+      </view>
+    </block>
+    <button class="start-button tap-feedback" bindtap="onStart">{{hasDraft ? '继续预约' : '开始预约'}}</button>
+    <button wx:if="{{hasDraft}}" class="restart-button" bindtap="onRestart">重新预约</button>
+  </view>
+</view>

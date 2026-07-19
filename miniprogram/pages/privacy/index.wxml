@@ -1,0 +1,1 @@
+<view class="article-page"><custom-navbar eyebrow="协议与规则" title="隐私政策"/><view class="article"><view class="notice">开发阶段示例内容，正式上线前需完成法律审核和小程序隐私保护指引配置。</view><text class="date">更新日期：2026年7月13日 · 生效日期：待定</text><view class="section" wx:for="{{sections}}" wx:key="*this"><text>{{index + 1}}. {{item[0]}}</text><text>{{item[1]}}</text></view></view></view>

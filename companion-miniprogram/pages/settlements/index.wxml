@@ -1,0 +1,48 @@
+<view class="page-shell settlements-page">
+  <view wx:if="{{loading && !overview}}" class="loading-state">正在加载结算信息…</view>
+
+  <block wx:if="{{overview}}">
+    <view class="amount-card">
+      <text>待确认结算</text>
+      <text>{{pendingAmountText}}</text>
+      <view class="month-paid"><text>本月已结算</text><text>{{paidThisMonthText}}</text></view>
+      <text class="amount-note">金额由平台根据已完成并审核通过的服务生成</text>
+    </view>
+
+    <view class="section-head">
+      <text>结算记录</text>
+      <text>{{records.length}} 期</text>
+    </view>
+
+    <view class="settlement-list">
+      <view
+        wx:for="{{records}}"
+        wx:key="id"
+        class="settlement-card card tap-feedback"
+        data-id="{{item.id}}"
+        bindtap="openRecord"
+      >
+        <view class="record-head">
+          <view class="companion-status-chip {{item.statusTone}}">{{item.statusText}}</view>
+          <text>{{item.settlementNo}}</text>
+        </view>
+        <text class="record-period">{{item.period}}</text>
+        <view class="record-main">
+          <view><text>{{item.serviceCount}}</text><text>服务单数</text></view>
+          <view><text>{{item.serviceAmountText}}</text><text>服务金额</text></view>
+          <view><text>{{item.payableAmountText}}</text><text>应结金额</text></view>
+        </view>
+        <view class="record-foot">
+          <text>调整金额 {{item.adjustmentAmountText}}</text>
+          <text>查看明细 ›</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="settlement-notice">
+      <text>结算说明</text>
+      <text>{{overview.notice}}</text>
+      <button class="finance-link tap-feedback" bindtap="contactFinance">对结算有疑问，联系平台</button>
+    </view>
+  </block>
+</view>

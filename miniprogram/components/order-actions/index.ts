@@ -1,0 +1,1 @@
+Component({ properties: { actions: { type: Array, value: [] }, busy: { type: Boolean, value: false } }, methods: { onAction(e: WechatMiniprogram.TouchEvent) { if (!this.properties.busy) this.triggerEvent('action', { type: e.currentTarget.dataset.type }) } } })

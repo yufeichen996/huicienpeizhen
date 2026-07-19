@@ -1,0 +1,6 @@
+<view class="booking-page"><custom-navbar eyebrow="陪诊预约" title="选择服务" /><booking-stepper current="1" />
+<view class="booking-content"><text class="section-title">需要哪种陪诊服务？</text><text class="section-note">选择后仍可在确认订单时修改</text>
+<view class="service-card {{selectedId === item.id ? 'selected' : ''}} tap-feedback" wx:for="{{services}}" wx:key="id" data-id="{{item.id}}" bindtap="onSelect">
+  <text class="service-icon">{{item.icon}}</text><view class="service-copy"><view><text class="service-name">{{item.name}}</text><text wx:if="{{!item.recommended}}" class="suggested">更多服务</text></view><text class="service-desc">{{item.description}}</text><text class="service-duration">预计 {{item.durationText}}</text></view>
+  <view class="service-right"><text class="check">{{selectedId === item.id ? '✓' : ''}}</text><text class="price">¥{{item.priceText}}起</text></view>
+</view></view><booking-action-bar secondary-text="返回" disabled="{{!selectedId}}" bindprimary="onNext" bindsecondary="onBack" /></view>

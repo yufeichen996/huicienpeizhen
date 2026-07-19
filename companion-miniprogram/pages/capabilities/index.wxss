@@ -1,0 +1,175 @@
+.capabilities-page {
+  padding-top: 20rpx;
+}
+
+.loading-state {
+  padding: 180rpx 0;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.verification-card {
+  padding: 28rpx;
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.verified-mark {
+  width: 64rpx;
+  height: 64rpx;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20rpx;
+  background: var(--color-success-soft);
+}
+
+.verified-mark view {
+  width: 28rpx;
+  height: 14rpx;
+  border-left: 6rpx solid var(--color-success);
+  border-bottom: 6rpx solid var(--color-success);
+  transform: rotate(-45deg) translate(2rpx, -3rpx);
+}
+
+.verification-card text {
+  display: block;
+}
+
+.verification-card text:first-child {
+  font-size: 27rpx;
+  font-weight: 750;
+}
+
+.verification-card text:last-child {
+  margin-top: 6rpx;
+  color: var(--color-text-secondary);
+  font-size: 20rpx;
+}
+
+.section-card {
+  margin-top: 20rpx;
+  padding: 28rpx;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-head text:first-child {
+  font-size: 29rpx;
+  font-weight: 750;
+}
+
+.section-head text:last-child {
+  color: var(--color-text-secondary);
+  font-size: 20rpx;
+}
+
+.skill-list,
+.hospital-list {
+  margin-top: 18rpx;
+}
+
+.skill-item,
+.hospital-item {
+  min-height: 92rpx;
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  border-top: 1rpx solid var(--color-divider);
+}
+
+.skill-mark,
+.hospital-mark {
+  width: 52rpx;
+  height: 52rpx;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 17rpx;
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+  font-size: 20rpx;
+  font-weight: 750;
+}
+
+.skill-item > view:nth-child(2) {
+  min-width: 0;
+  flex: 1;
+}
+
+.skill-item text {
+  display: block;
+}
+
+.skill-item view text:first-child {
+  font-size: 24rpx;
+  font-weight: 650;
+}
+
+.skill-item view text:last-child {
+  margin-top: 5rpx;
+  color: var(--color-text-secondary);
+  font-size: 19rpx;
+}
+
+.skill-item > text,
+.hospital-item > text:last-child {
+  margin-left: auto;
+  color: var(--color-success);
+  font-size: 19rpx;
+  font-weight: 650;
+}
+
+.hospital-mark view {
+  width: 20rpx;
+  height: 24rpx;
+  border: 4rpx solid var(--color-primary);
+  border-radius: 4rpx;
+}
+
+.hospital-item > text:nth-child(2) {
+  font-size: 24rpx;
+  font-weight: 650;
+}
+
+.scope-notice {
+  margin-top: 20rpx;
+  padding: 24rpx 28rpx;
+  border-radius: 22rpx;
+  color: var(--color-text-secondary);
+  background: var(--color-primary-soft);
+}
+
+.scope-notice text {
+  display: block;
+}
+
+.scope-notice text:first-child {
+  color: var(--color-primary);
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.scope-notice text:last-child {
+  margin-top: 7rpx;
+  font-size: 20rpx;
+  line-height: 34rpx;
+}
+
+.change-button {
+  width: 100%;
+  height: 88rpx;
+  margin-top: 24rpx;
+  border-radius: 22rpx;
+  color: var(--color-primary);
+  background: #ffffff;
+  font-size: 25rpx;
+  font-weight: 700;
+}

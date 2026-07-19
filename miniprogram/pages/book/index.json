@@ -1,0 +1,8 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "custom-navbar": "/components/custom-navbar/index",
+    "app-card": "/components/app-card/index",
+    "app-icon": "/components/app-icon/index"
+  }
+}

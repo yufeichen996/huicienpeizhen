@@ -1,0 +1,201 @@
+<view class="page-shell page-with-footer execution-page">
+  <view wx:if="{{loading && !task}}" class="loading-state">正在恢复服务记录…</view>
+
+  <block wx:if="{{task}}">
+    <view class="service-head card">
+      <view>
+        <text class="head-label">服务进行中</text>
+        <text class="head-name">{{task.serviceName}}</text>
+        <text class="head-location">{{task.hospitalName}} · {{task.departmentName}}</text>
+      </view>
+      <view class="service-timer">
+        <text>{{elapsedText}}</text>
+        <text>已服务</text>
+      </view>
+    </view>
+
+    <view class="progress-card card">
+      <view class="progress-copy">
+        <text>服务节点</text>
+        <text>{{completedCount}} / {{totalCount}} 已记录</text>
+      </view>
+      <view class="progress-track">
+        <view style="width: {{totalCount ? completedCount / totalCount * 100 : 0}}%"></view>
+      </view>
+    </view>
+
+    <view class="milestone-list">
+      <view
+        wx:for="{{milestones}}"
+        wx:key="id"
+        id="{{item.anchorId}}"
+        class="milestone-row status-{{item.status}}"
+      >
+        <view class="milestone-state">
+          <view class="state-mark">
+            <text wx:if="{{item.status === 'completed'}}">✓</text>
+            <text wx:elif="{{item.status === 'failed'}}">!</text>
+            <view wx:elif="{{item.status === 'active'}}" class="active-dot"></view>
+          </view>
+          <view wx:if="{{index < milestones.length - 1}}" class="state-line"></view>
+        </view>
+
+        <view class="milestone-card card">
+          <view class="milestone-header">
+            <text class="node-index">节点 {{item.indexText}}</text>
+            <text class="status-label">{{item.statusText}}</text>
+          </view>
+          <text class="milestone-title">{{item.title}}</text>
+          <text class="milestone-desc">{{item.description}}</text>
+          <view class="node-tags">
+            <text wx:if="{{item.required}}" class="required-label">必需节点</text>
+            <text wx:else class="optional-label">非必需节点</text>
+          </view>
+
+          <view wx:if="{{item.status === 'active'}}" class="node-actions">
+            <button
+              class="fail-button tap-feedback"
+              data-node-id="{{item.id}}"
+              disabled="{{actionBusy}}"
+              bindtap="expandFailure"
+            >无法完成</button>
+            <button
+              class="complete-button tap-feedback"
+              data-node-id="{{item.id}}"
+              loading="{{busyMilestoneId === item.id && actionBusy && busyAction === 'complete'}}"
+              disabled="{{actionBusy}}"
+              bindtap="completeMilestone"
+            >确认完成</button>
+          </view>
+
+          <view
+            wx:if="{{item.status === 'active' && expandedFailureNodeId === item.id}}"
+            class="failure-panel"
+          >
+            <view class="failure-heading">
+              <text>异常说明</text>
+              <button
+                class="collapse-button tap-feedback"
+                data-node-id="{{item.id}}"
+                disabled="{{actionBusy}}"
+                bindtap="collapseFailure"
+              >收起</button>
+            </view>
+            <textarea
+              class="failure-textarea"
+              maxlength="200"
+              value="{{item.failureReasonDraft}}"
+              placeholder="请填写当前节点无法完成的原因"
+              data-node-id="{{item.id}}"
+              disabled="{{actionBusy}}"
+              bindinput="onFailureReasonInput"
+            ></textarea>
+            <text class="character-count">{{item.failureReasonLength}} / 200</text>
+
+            <view class="evidence-heading">
+              <view>
+                <text>上传凭证</text>
+                <text>可选，最多 9 张</text>
+              </view>
+            </view>
+            <view class="evidence-grid">
+              <view
+                wx:for="{{item.evidenceDraft}}"
+                wx:for-item="imagePath"
+                wx:for-index="imageIndex"
+                wx:key="*this"
+                class="evidence-item"
+              >
+                <image
+                  src="{{imagePath}}"
+                  mode="aspectFill"
+                  data-node-id="{{item.id}}"
+                  data-path="{{imagePath}}"
+                  bindtap="previewEvidence"
+                />
+                <button
+                  class="remove-evidence"
+                  data-node-id="{{item.id}}"
+                  data-image-index="{{imageIndex}}"
+                  bindtap="removeEvidence"
+                >×</button>
+              </view>
+              <button
+                wx:if="{{item.evidenceDraft.length < 9}}"
+                class="add-evidence tap-feedback"
+                data-node-id="{{item.id}}"
+                disabled="{{actionBusy}}"
+                bindtap="addEvidence"
+              >
+                <text>＋</text>
+                <text>上传图片</text>
+              </button>
+            </view>
+            <button
+              class="submit-failure tap-feedback"
+              data-node-id="{{item.id}}"
+              loading="{{busyMilestoneId === item.id && actionBusy && busyAction === 'failure'}}"
+              disabled="{{actionBusy}}"
+              bindtap="submitFailure"
+            >提交异常</button>
+          </view>
+
+          <view wx:if="{{item.status === 'completed'}}" class="node-result completed-result">
+            <text wx:if="{{item.resultTimeText}}">完成时间：{{item.resultTimeText}}</text>
+            <text wx:if="{{item.note}}">记录：{{item.note}}</text>
+            <view wx:if="{{item.evidenceImages.length}}" class="result-evidence">
+              <image
+                wx:for="{{item.evidenceImages}}"
+                wx:for-item="imagePath"
+                wx:key="*this"
+                src="{{imagePath}}"
+                mode="aspectFill"
+                data-node-id="{{item.id}}"
+                data-path="{{imagePath}}"
+                bindtap="previewEvidence"
+              />
+            </view>
+          </view>
+
+          <view wx:if="{{item.status === 'failed'}}" class="node-result failed-result">
+            <text class="result-title">异常原因</text>
+            <text>{{item.failureReason || item.note}}</text>
+            <text wx:if="{{item.resultTimeText}}" class="result-time">提交时间：{{item.resultTimeText}}</text>
+            <view wx:if="{{item.evidenceImages.length}}" class="result-evidence">
+              <image
+                wx:for="{{item.evidenceImages}}"
+                wx:for-item="imagePath"
+                wx:key="*this"
+                src="{{imagePath}}"
+                mode="aspectFill"
+                data-node-id="{{item.id}}"
+                data-path="{{imagePath}}"
+                bindtap="previewEvidence"
+              />
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="expense-entry card">
+      <view><text>费用与票据</text><text>仅记录实际垫付，金额变化需平台审核</text></view>
+      <button class="tap-feedback" bindtap="recordExpense">记录费用 ›</button>
+    </view>
+
+    <view class="weak-network-tip">
+      <view></view>
+      <text>节点记录按提交结果保存；网络失败时输入内容会保留在当前节点，请重试。</text>
+    </view>
+  </block>
+</view>
+
+<view wx:if="{{task}}" class="fixed-action-bar">
+  <button class="secondary-button tap-feedback" disabled="{{actionBusy}}" bindtap="reportException">报告异常</button>
+  <button
+    class="primary-button tap-feedback"
+    disabled="{{!canFinish || actionBusy}}"
+    loading="{{actionBusy && busyAction === 'finish'}}"
+    bindtap="finishService"
+  >结束服务流程</button>
+</view>

@@ -1,0 +1,13 @@
+<view class="sheet-root {{visible ? 'is-visible' : ''}}" catchtouchmove="noop">
+  <view class="sheet-overlay" bindtap="close"></view>
+  <view class="sheet-panel" catchtap="noop">
+    <view class="sheet-handle"></view>
+    <view class="sheet-header">
+      <text class="sheet-title">{{title}}</text>
+      <button class="close-button tap-feedback" bindtap="close" aria-label="关闭"><app-icon name="close" variant="outline" size="32" label="关闭" /></button>
+    </view>
+    <scroll-view class="sheet-content" scroll-y enhanced show-scrollbar="{{false}}">
+      <slot></slot>
+    </scroll-view>
+  </view>
+</view>

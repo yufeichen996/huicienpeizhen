@@ -1,0 +1,92 @@
+<view class="page-shell hall-page">
+  <view class="hall-hero">
+    <view class="hall-copy">
+      <text class="hall-eyebrow">实时任务池</text>
+      <text class="hall-title">抢单大厅</text>
+      <text class="hall-desc">所有服务类型均可抢单，合理安排时间后可连续承接多项任务。</text>
+    </view>
+    <view class="hall-count">
+      <text>{{orders.length}}</text>
+      <text>可抢任务</text>
+    </view>
+  </view>
+
+  <view class="policy-strip card">
+    <view><text>不限</text><text>服务类型</text></view>
+    <view><text>不限</text><text>同时接单数</text></view>
+    <view><text>实时</text><text>先抢先得</text></view>
+  </view>
+
+  <view class="privacy-tip">
+    <view></view>
+    <text>抢单前仅展示必要的脱敏信息；抢单成功后才会解锁客户联系方式和详细集合地点。</text>
+  </view>
+
+  <view class="hall-head">
+    <text>可抢任务</text>
+    <text>{{orders.length}} 单</text>
+  </view>
+
+  <view wx:if="{{loading && !orders.length}}" class="loading-state">正在同步机构订单…</view>
+
+  <view wx:if="{{orders.length}}" class="order-list">
+    <view wx:for="{{orders}}" wx:key="id" class="grab-card card">
+      <view class="source-row">
+        <view class="source-badge">合作机构</view>
+        <text>{{item.sourceText}}</text>
+        <text>{{item.orderNo}}</text>
+      </view>
+
+      <view class="service-row">
+        <view>
+          <text class="service-name">{{item.serviceName}}</text>
+          <text class="patient-summary">{{item.patientSummary}}</text>
+        </view>
+        <view class="fee-block">
+          <text>{{item.feeText}}</text>
+          <text>预计收入</text>
+        </view>
+      </view>
+
+      <view class="key-info">
+        <view>
+          <text>服务时间</text>
+          <text>{{item.bookingText}}</text>
+        </view>
+        <view>
+          <text>服务地点</text>
+          <text>{{item.hospitalName}}</text>
+        </view>
+      </view>
+
+      <view class="detail-line">
+        <text>{{item.campusName}} · {{item.departmentName}}</text>
+        <text>{{item.serviceDistrict}} · {{item.durationText}}</text>
+      </view>
+
+      <view class="need-list">
+        <text wx:for="{{item.serviceNeeds}}" wx:key="*this">{{item}}</text>
+      </view>
+
+      <button
+        class="claim-button tap-feedback"
+        data-order-id="{{item.id}}"
+        loading="{{claimingId === item.id}}"
+        disabled="{{!!claimingId}}"
+        bindtap="claimOrder"
+      >立即抢单</button>
+    </view>
+  </view>
+
+  <view wx:elif="{{!loading}}" class="empty-card card">
+    <view class="empty-symbol"><view></view></view>
+    <text class="empty-title">暂时没有可抢任务</text>
+    <text class="empty-desc">新任务发布后会实时出现在这里，下拉或点击按钮即可刷新。</text>
+    <button class="refresh-button tap-feedback" bindtap="load">刷新大厅</button>
+  </view>
+
+  <view class="hall-rules">
+    <text>抢单规则</text>
+    <text>不限制服务类型和同时接单数量。请自行核对服务时间，当前 Mock 按先抢先得模拟，最终结果以服务端确认为准。</text>
+  </view>
+</view>

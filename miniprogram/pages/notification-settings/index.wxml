@@ -1,0 +1,43 @@
+<view class="page notification-page">
+  <custom-navbar eyebrow="消息与提醒" title="订阅消息" />
+  <view class="page-content">
+    <view class="hero-card">
+      <view class="hero-icon">
+        <app-icon name="notification" variant="outline" size="54" label="消息通知" />
+      </view>
+      <view class="hero-copy">
+        <text>不错过关键服务进度</text>
+        <text>授权由微信管理，拒绝或关闭通知不会影响预约和订单服务。</text>
+      </view>
+    </view>
+
+    <view class="subscription-card">
+      <view wx:for="{{items}}" wx:key="key" class="subscription-row">
+        <view class="row-copy">
+          <view class="row-title">
+            <text>{{item.title}}</text>
+            <text class="status {{item.status === 'ACCEPTED' ? 'accepted' : item.status === 'BANNED' ? 'banned' : ''}}">{{item.statusText}}</text>
+          </view>
+          <text>{{item.description}}</text>
+        </view>
+        <button
+          class="row-action tap-feedback"
+          disabled="{{busyKey || !item.available}}"
+          data-key="{{item.key}}"
+          bindtap="enableOne"
+        >{{busyKey === item.key ? '处理中' : item.actionText}}</button>
+      </view>
+    </view>
+
+    <button class="primary-action tap-feedback" disabled="{{busyKey}}" bindtap="enableAll">
+      {{busyKey === 'ALL' ? '正在申请授权…' : '开启全部服务通知'}}
+    </button>
+    <button class="setting-action tap-feedback" bindtap="openWechatSettings">前往微信权限设置</button>
+
+    <view class="notice">
+      <text>订阅说明</text>
+      <text>一次性订阅通常需要在每次下单或支付后重新获得一次发送机会。若微信授权面板选择保持设置，后续调用可能不再重复弹窗。</text>
+      <text>通知仅展示必要的订单状态，不直接展示就诊人、科室详情等敏感医疗信息。</text>
+    </view>
+  </view>
+</view>

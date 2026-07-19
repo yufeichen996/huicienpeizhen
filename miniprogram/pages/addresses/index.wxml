@@ -1,0 +1,26 @@
+<view class="page with-action">
+  <custom-navbar eyebrow="取送服务预留" title="常用地址"/>
+  <view class="page-content">
+    <view wx:if="{{!editing}}">
+      <view class="address" wx:for="{{addresses}}" wx:key="id">
+        <view class="head"><text>{{item.contactName}}</text><text>{{item.phoneMasked}}</text><text wx:if="{{item.isDefault}}">默认</text></view>
+        <text>{{item.city}}{{item.district}}{{item.detail}}{{item.doorplate}}</text>
+        <view class="actions"><button wx:if="{{!item.isDefault}}" data-id="{{item.id}}" bindtap="setDefault">设为默认</button><button data-id="{{item.id}}" bindtap="edit">编辑</button><button data-id="{{item.id}}" bindtap="remove">删除</button></view>
+      </view>
+      <empty-state wx:if="{{!addresses.length}}" title="暂无常用地址" description="地址用于未来取送报告、代取药物等服务"/>
+    </view>
+    <view wx:else>
+      <view class="group">
+        <view class="field"><text>联系人 *</text><input value="{{form.contactName}}" data-field="contactName" bindinput="input"/></view>
+        <view class="field"><text>手机号 *</text><input type="number" maxlength="11" value="{{form.phone}}" data-field="phone" bindinput="input"/></view>
+        <view class="field"><text>城市</text><input value="{{form.city}}" data-field="city" bindinput="input"/></view>
+        <view class="field"><text>区域 *</text><input value="{{form.district}}" data-field="district" bindinput="input"/></view>
+        <view class="field"><text>详细地址 *</text><input value="{{form.detail}}" data-field="detail" bindinput="input"/></view>
+        <view class="field"><text>门牌号</text><input value="{{form.doorplate}}" data-field="doorplate" bindinput="input"/></view>
+        <view class="field"><text>设为默认</text><switch checked="{{form.isDefault}}" color="#007AFF" bindchange="defaultChange"/></view>
+      </view>
+      <button class="cancel" bindtap="cancel">取消编辑</button>
+    </view>
+  </view>
+  <view class="fixed-action"><button wx:if="{{editing}}" class="primary" bindtap="save">保存地址</button><button wx:else class="primary" bindtap="add">新增地址</button></view>
+</view>

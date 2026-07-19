@@ -1,0 +1,74 @@
+<view class="page-shell page-with-footer summary-page">
+  <view wx:if="{{loading && !task}}" class="loading-state">正在整理服务记录…</view>
+
+  <block wx:if="{{task}}">
+    <view class="summary-head card">
+      <text class="head-label">服务流程已结束</text>
+      <text class="head-title">{{task.serviceName}}</text>
+      <text class="head-location">{{task.hospitalName}} · {{task.departmentName}}</text>
+      <view class="time-grid">
+        <view><text>开始时间</text><text>{{startedAtText}}</text></view>
+        <view><text>结束时间</text><text>{{endedAtText}}</text></view>
+      </view>
+    </view>
+
+    <view class="record-summary card">
+      <text class="form-section-title">节点完成情况</text>
+      <view class="record-numbers">
+        <view><text>{{completedCount}}</text><text>已完成</text></view>
+        <view><text>{{skippedCount}}</text><text>已说明</text></view>
+        <view><text>{{milestones.length}}</text><text>全部节点</text></view>
+      </view>
+    </view>
+
+    <view class="form-card summary-form card">
+      <text class="form-section-title">服务结果</text>
+      <text class="field-label">结果摘要（必填）</text>
+      <textarea
+        class="text-area"
+        maxlength="500"
+        value="{{resultSummary}}"
+        placeholder="请客观记录已完成事项、交付物和需要用户后续关注的非诊断性事项"
+        cursor-spacing="160"
+        bindinput="onResultInput"
+      ></textarea>
+      <text class="field-hint">{{resultSummary.length}} / 500，至少 10 个字</text>
+
+      <text class="field-label field-gap">未完成事项及原因</text>
+      <textarea
+        class="text-area short"
+        maxlength="300"
+        value="{{unfinishedItems}}"
+        placeholder="如全部完成可不填写"
+        cursor-spacing="160"
+        bindinput="onUnfinishedInput"
+      ></textarea>
+    </view>
+
+    <view class="exception-card card">
+      <view>
+        <text>本次服务是否发生异常</text>
+        <text>{{task.activeExceptionCount ? '已上报 ' + task.activeExceptionCount + ' 条异常' : '请根据真实情况选择'}}</text>
+      </view>
+      <switch checked="{{hasException}}" color="#D83B3B" bindchange="onExceptionChange" />
+    </view>
+
+    <view class="expense-summary card">
+      <view>
+        <text>费用与票据</text>
+        <text>已记录 {{expenseCount}} 条，共 {{expenseAmountText}}</text>
+      </view>
+      <button class="tap-feedback" bindtap="recordExpense">继续记录 ›</button>
+    </view>
+
+    <view class="submit-notice">
+      <view></view>
+      <text>总结仅记录服务事实，不填写诊断判断；提交后更正需要平台审核并留痕。</text>
+    </view>
+  </block>
+</view>
+
+<view wx:if="{{task}}" class="fixed-action-bar">
+  <button class="secondary-button tap-feedback" disabled="{{submitting}}" bindtap="reportException">补充异常</button>
+  <button class="primary-button tap-feedback" loading="{{submitting}}" disabled="{{submitting}}" bindtap="submit">提交并完成</button>
+</view>

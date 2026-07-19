@@ -1,0 +1,80 @@
+<view class="page-shell workbench-page">
+  <view wx:if="{{loading && !summary}}" class="loading-state">正在加载工作台…</view>
+
+  <block wx:if="{{summary}}">
+    <view class="workbench-head">
+      <view>
+        <text class="eyebrow">汇慈恩陪诊师</text>
+        <text class="greeting">{{summary.profile.name}}，今天辛苦了</text>
+      </view>
+      <button class="account-button tap-feedback" bindtap="logout">退出</button>
+    </view>
+
+    <view class="availability-card card">
+      <view>
+        <text class="availability-title">{{isAvailable ? '当前可接单' : '当前休息中'}}</text>
+        <text class="availability-note">{{isAvailable ? '可连续接单，任务数量与服务类型不限' : '暂停接收新任务，已接任务不受影响'}}</text>
+      </view>
+      <switch checked="{{isAvailable}}" color="#21A366" disabled="{{actionBusy}}" bindchange="onAvailabilityChange" />
+    </view>
+
+    <view class="stats-grid">
+      <view class="stat-card card"><text class="stat-value">{{summary.stats.todayTotal}}</text><text class="stat-label">当前任务</text></view>
+      <view class="stat-card card"><text class="stat-value">{{summary.stats.pendingConfirmation}}</text><text class="stat-label">待确认</text></view>
+      <view class="stat-card card"><text class="stat-value">{{summary.stats.inService}}</text><text class="stat-label">服务中</text></view>
+    </view>
+
+    <view class="grab-entry card tap-feedback" bindtap="openOrderHall">
+      <view class="grab-entry-icon"><view></view></view>
+      <view class="grab-entry-copy">
+        <text class="grab-entry-title">抢单大厅</text>
+      </view>
+      <view class="grab-entry-meta">
+        <text>可抢 {{summary.openGrabOrderCount}} 单</text>
+        <text>›</text>
+      </view>
+    </view>
+
+    <view class="section-head">
+      <text class="section-title">下一项任务</text>
+      <button class="all-tasks tap-feedback" bindtap="openTasks">全部任务 ›</button>
+    </view>
+
+    <view wx:if="{{task}}" class="task-card card">
+      <view class="task-top">
+        <view class="status-chip {{task.statusTone}}">{{task.statusText}}</view>
+        <text class="order-no">{{task.orderNo}}</text>
+      </view>
+      <text class="task-service">{{task.serviceName}}</text>
+      <text class="status-description">{{task.statusDescription}}</text>
+
+      <view class="task-info">
+        <view class="info-row"><text>预约时间</text><text>{{task.bookingText}}</text></view>
+        <view class="info-row"><text>服务地点</text><text>{{task.hospitalName}}</text></view>
+        <view class="info-row"><text>就诊科室</text><text>{{task.departmentName}}</text></view>
+        <view wx:if="{{task.patientDisplayName}}" class="info-row"><text>就诊人</text><text>{{task.patientDisplayName}}</text></view>
+        <view wx:if="{{task.meetingPoint}}" class="info-row"><text>集合地点</text><text>{{task.meetingPoint}}</text></view>
+      </view>
+
+      <view wx:if="{{task.primaryActionText}}" class="task-actions">
+        <button wx:if="{{task.canReject}}" class="reject-button tap-feedback" disabled="{{actionBusy}}" bindtap="onReject">拒绝</button>
+        <button class="task-primary tap-feedback" loading="{{actionBusy}}" disabled="{{actionBusy}}" bindtap="onPrimaryAction">{{task.primaryActionText}}</button>
+      </view>
+      <button class="task-detail-link tap-feedback" bindtap="openTaskDetail">查看完整任务信息 ›</button>
+    </view>
+
+    <view wx:else class="empty-card card">
+      <view class="empty-symbol"><view></view></view>
+      <text class="empty-title">当前暂无任务</text>
+      <text class="empty-desc">保持可接单状态，平台派单后会在这里显示。</text>
+    </view>
+
+    <view class="announcement card">
+      <text wx:if="{{summary.openExceptionCount}}" class="exception-count">{{summary.openExceptionCount}} 个异常待平台处理</text>
+      <text class="announcement-label">工作提醒</text>
+      <text class="announcement-text">{{summary.announcement}}</text>
+      <button class="exception-link tap-feedback" bindtap="openExceptions">查看异常工单 ›</button>
+      <button class="support-link tap-feedback" bindtap="contactPlatform">需要帮助时联系平台</button>
+    </view>
+  </block>
+</view>

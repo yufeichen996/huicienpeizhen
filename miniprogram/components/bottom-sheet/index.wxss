@@ -1,0 +1,13 @@
+@import "/styles/tokens.wxss";
+
+.sheet-root { position: fixed; z-index: 2000; inset: 0; pointer-events: none; }
+.sheet-overlay { position: absolute; inset: 0; opacity: 0; background: rgba(0, 0, 0, 0.32); transition: opacity 220ms ease; }
+.sheet-panel { position: absolute; left: 0; right: 0; bottom: 0; max-height: 88vh; padding: 14rpx var(--page-gutter) calc(28rpx + env(safe-area-inset-bottom)); display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box; border-radius: var(--sheet-radius) var(--sheet-radius) 0 0; background: var(--color-card); box-shadow: var(--shadow-sheet); transform: translateY(105%); transition: transform 260ms cubic-bezier(0.22, 0.75, 0.24, 1); }
+.is-visible { pointer-events: auto; }
+.is-visible .sheet-overlay { opacity: 1; }
+.is-visible .sheet-panel { transform: translateY(0); }
+.sheet-handle { width: 72rpx; height: 8rpx; margin: 0 auto 18rpx; border-radius: var(--radius-pill); background: rgba(60, 60, 67, 0.2); }
+.sheet-header { min-height: 72rpx; display: flex; align-items: center; justify-content: space-between; flex: none; }
+.sheet-title { color: var(--color-text-primary); font-size: var(--font-nav); line-height: 44rpx; font-weight: 700; }
+.close-button { width: 64rpx !important; min-width: 64rpx !important; max-width: 64rpx; height: 64rpx; margin: 0 !important; padding: 0 !important; display: flex !important; align-items: center; justify-content: center; flex: 0 0 64rpx; overflow: hidden; border-radius: 50%; line-height: 1; background: var(--color-page); }
+.sheet-content { min-height: 0; max-height: calc(88vh - 122rpx - env(safe-area-inset-bottom)); padding: 12rpx 0 8rpx; box-sizing: border-box; }

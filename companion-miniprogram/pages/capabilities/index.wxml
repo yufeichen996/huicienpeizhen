@@ -1,0 +1,48 @@
+<view class="page-shell capabilities-page">
+  <view wx:if="{{loading && !profile}}" class="loading-state">正在加载认证能力…</view>
+
+  <block wx:if="{{profile}}">
+    <view class="verification-card card">
+      <view class="verified-mark"><view></view></view>
+      <view>
+        <text>平台认证已通过</text>
+        <text>仅会向您派发认证范围内的服务任务</text>
+      </view>
+    </view>
+
+    <view class="section-card card">
+      <view class="section-head">
+        <text>认证服务技能</text>
+        <text>{{profile.serviceSkills.length}} 项</text>
+      </view>
+      <view class="skill-list">
+        <view wx:for="{{profile.serviceSkills}}" wx:key="*this" class="skill-item">
+          <view class="skill-mark">{{index + 1}}</view>
+          <view><text>{{item}}</text><text>已通过平台能力核验</text></view>
+          <text>有效</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section-card card">
+      <view class="section-head">
+        <text>服务医院范围</text>
+        <text>{{profile.serviceHospitals.length}} 家</text>
+      </view>
+      <view class="hospital-list">
+        <view wx:for="{{profile.serviceHospitals}}" wx:key="*this" class="hospital-item">
+          <view class="hospital-mark"><view></view></view>
+          <text>{{item}}</text>
+          <text>已开通</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="scope-notice">
+      <text>范围说明</text>
+      <text>平台派单还会同时校验在线状态、排班、时间冲突和当前任务负载。</text>
+    </view>
+
+    <button class="change-button tap-feedback" bindtap="requestChange">申请变更能力范围</button>
+  </block>
+</view>

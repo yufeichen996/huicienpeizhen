@@ -1,0 +1,87 @@
+<view class="page-shell page-with-footer exception-page">
+  <view class="guidance card">
+    <view class="guidance-mark">!</view>
+    <view>
+      <text>异常独立记录，不会覆盖任务进度</text>
+      <text>请客观描述现场事实，不填写诊断判断。</text>
+    </view>
+  </view>
+
+  <view class="form-card card">
+    <text class="form-section-title">1. 选择异常分类</text>
+    <view class="category-grid">
+      <view
+        wx:for="{{categoryOptions}}"
+        wx:key="value"
+        class="category-option {{category === item.value ? 'active' : ''}} {{item.highRisk ? 'high-risk' : ''}}"
+        data-category="{{item.value}}"
+        bindtap="selectCategory"
+      >{{item.label}}</view>
+    </view>
+  </view>
+
+  <view class="form-card card">
+    <text class="form-section-title">2. 选择紧急程度</text>
+    <view class="urgency-list">
+      <view
+        wx:for="{{urgencyOptions}}"
+        wx:key="value"
+        class="urgency-option {{urgency === item.value ? 'active' : ''}}"
+        data-urgency="{{item.value}}"
+        bindtap="selectUrgency"
+      >
+        <view class="radio-mark"><view></view></view>
+        <view><text>{{item.label}}</text><text>{{item.description}}</text></view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showEmergencyNotice}}" class="emergency-notice">
+    <text>高优先级异常</text>
+    <text>平台将优先通知调度和客服。涉及身体突发不适时，请先联系现场医务人员。</text>
+    <button class="contact-button tap-feedback" bindtap="contactPlatform">立即联系平台</button>
+  </view>
+
+  <view class="form-card card">
+    <text class="form-section-title">3. 填写现场说明</text>
+    <textarea
+      class="text-area"
+      maxlength="500"
+      value="{{description}}"
+      placeholder="请说明发生了什么、当前服务是否受影响，以及已采取的非医疗处理措施"
+      bindinput="onDescriptionInput"
+    ></textarea>
+    <text class="field-hint">{{description.length}} / 500，至少 10 个字</text>
+  </view>
+
+  <view class="form-card card">
+    <text class="form-section-title">4. 添加必要凭证</text>
+    <text class="evidence-tip">最多 3 张，仅上传与异常处理直接相关的图片。</text>
+    <view class="evidence-grid">
+      <view
+        wx:for="{{evidencePaths}}"
+        wx:key="*this"
+        class="evidence-item"
+        data-path="{{item}}"
+        bindtap="previewEvidence"
+      >
+        <image src="{{item}}" mode="aspectFill"></image>
+        <button
+          class="remove-evidence"
+          data-index="{{index}}"
+          catchtap="removeEvidence"
+          aria-label="删除图片"
+        >×</button>
+      </view>
+      <button
+        wx:if="{{evidencePaths.length < 3}}"
+        class="add-evidence tap-feedback"
+        bindtap="addEvidence"
+      ><text>＋</text><text>拍照/相册</text></button>
+    </view>
+  </view>
+</view>
+
+<view class="fixed-action-bar">
+  <button class="primary-button tap-feedback" loading="{{submitting}}" disabled="{{submitting}}" bindtap="submit">确认提交异常</button>
+</view>

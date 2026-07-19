@@ -1,0 +1,14 @@
+import { favoriteService } from '../../services/favorite'
+import { serviceService,type ServiceSort } from '../../services/service'
+import { bookingStore,formatMoney } from '../../stores/booking'
+import { navigation } from '../../utils/navigation'
+
+const PAGE_SIZE=4
+Page({
+  data:{categories:[{id:'all',text:'全部'},{id:'medical',text:'陪同就医'},{id:'exam',text:'检查协助'},{id:'agency',text:'代办服务'},{id:'report',text:'报告服务'},{id:'inpatient',text:'住院服务'}],sorts:[{id:'recommended',text:'推荐'},{id:'price',text:'价格从低到高'},{id:'duration',text:'服务时长'}],category:'all',sort:'recommended' as ServiceSort,allServices:[] as Array<Record<string,unknown>>,services:[] as Array<Record<string,unknown>>,visibleCount:PAGE_SIZE,hasMore:false,loading:true,error:false,loginVisible:false,pendingFavorite:''},
+  onLoad(query:Record<string,string|undefined>){if(query.category)this.setData({category:query.category});this.load()},onPullDownRefresh(){this.load();wx.stopPullDownRefresh()},onReachBottom(){this.loadMore()},
+  load(reset=true){try{const allServices=serviceService.list({categoryId:this.data.category,sort:this.data.sort}).map(i=>({...i,priceText:formatMoney(i.price),favorited:favoriteService.isFavorite('service',i.id)}));const visibleCount=reset?PAGE_SIZE:Math.max(this.data.visibleCount,PAGE_SIZE);this.setData({allServices,services:allServices.slice(0,visibleCount),visibleCount,hasMore:visibleCount<allServices.length,loading:false,error:false})}catch{this.setData({loading:false,error:true})}},
+  loadMore(){if(!this.data.hasMore)return;const visibleCount=this.data.visibleCount+PAGE_SIZE;this.setData({visibleCount,services:this.data.allServices.slice(0,visibleCount),hasMore:visibleCount<this.data.allServices.length})},
+  category(e:WechatMiniprogram.TouchEvent){this.setData({category:e.currentTarget.dataset.id,loading:true});this.load()},sort(e:WechatMiniprogram.PickerChange){this.setData({sort:this.data.sorts[Number(e.detail.value)].id as ServiceSort});this.load()},detail(e:WechatMiniprogram.CustomEvent<{id:string}>){navigation.openService(e.detail.id)},book(e:WechatMiniprogram.CustomEvent<{id:string}>){const item=serviceService.getBookingOption(e.detail.id as never);if(!item)return;bookingStore.clear();bookingStore.selectService(item);navigation.startBooking()},favorite(e:WechatMiniprogram.CustomEvent<{id:string}>){this.toggleFavorite(e.detail.id)},
+  toggleFavorite(id:string){const item=serviceService.getById(id);if(!item)return;const result=favoriteService.toggle({id:`service-${id}`,targetId:id,type:'service',title:item.name,subtitle:item.shortDescription,createdAt:new Date().toISOString()});if(result.loginRequired){this.setData({loginVisible:true,pendingFavorite:id});return}this.load(false)},loginSuccess(){const id=this.data.pendingFavorite;this.setData({loginVisible:false,pendingFavorite:''});if(id)this.toggleFavorite(id)},closeLogin(){this.setData({loginVisible:false,pendingFavorite:''})},retry(){this.setData({loading:true});this.load()},
+})

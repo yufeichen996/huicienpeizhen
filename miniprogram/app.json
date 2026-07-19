@@ -1,0 +1,57 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/book/index",
+    "pages/booking-service/index",
+    "pages/booking-time/index",
+    "pages/booking-companion/index",
+    "pages/booking-confirm/index",
+    "pages/booking-success/index",
+    "pages/orders/index",
+    "pages/order-detail/index",
+    "pages/order-review/index",
+    "pages/profile/index",
+    "pages/login/index",
+    "pages/profile-edit/index",
+    "pages/patients/index",
+    "pages/patient-edit/index",
+    "pages/favorites/index",
+    "pages/coupons/index",
+    "pages/addresses/index",
+    "pages/customer-service/index",
+    "pages/feedback/index",
+    "pages/agreement/index",
+    "pages/privacy/index",
+    "pages/account-security/index",
+    "pages/notification-settings/index",
+    "pages/about/index",
+    "pages/search/index",
+    "pages/search-result/index",
+    "pages/services/index",
+    "pages/service-detail/index",
+    "pages/companions/index",
+    "pages/companion-detail/index",
+    "pages/hospitals/index",
+    "pages/hospital-detail/index"
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "backgroundColor": "#F2F2F7",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#8E8E93",
+    "selectedColor": "#007AFF",
+    "backgroundColor": "#FFFFFF",
+    "list": [
+      { "pagePath": "pages/home/index", "text": "首页" },
+      { "pagePath": "pages/book/index", "text": "预约" },
+      { "pagePath": "pages/orders/index", "text": "订单" },
+      { "pagePath": "pages/profile/index", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

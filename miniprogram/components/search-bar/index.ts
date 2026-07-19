@@ -1,0 +1,1 @@
+Component({properties:{value:{type:String,value:''},placeholder:{type:String,value:'搜索医院、科室、服务或陪诊员'},focus:{type:Boolean,value:false}},methods:{input(e:WechatMiniprogram.Input){this.triggerEvent('input',{value:e.detail.value})},confirm(e:WechatMiniprogram.Input){this.triggerEvent('confirm',{value:e.detail.value})},clear(){this.triggerEvent('clear')}}})

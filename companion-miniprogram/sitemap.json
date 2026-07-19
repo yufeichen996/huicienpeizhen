@@ -1,0 +1,9 @@
+{
+  "desc": "汇慈恩陪诊师端页面索引",
+  "rules": [
+    {
+      "action": "disallow",
+      "page": "*"
+    }
+  ]
+}

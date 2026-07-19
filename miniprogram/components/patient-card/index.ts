@@ -1,0 +1,1 @@
+Component({properties:{patient:{type:Object,value:{}}},methods:{edit(){this.triggerEvent('edit',{id:(this.properties.patient as {id:string}).id})},setDefault(){this.triggerEvent('default',{id:(this.properties.patient as {id:string}).id})},remove(){this.triggerEvent('remove',{id:(this.properties.patient as {id:string}).id})}}})

@@ -1,0 +1,1 @@
+<view class="review"><view><text>{{review.userName}}</text><text>★ {{review.rating}}</text></view><text class="tags">{{review.tagsText}}</text><text class="content">{{review.content}}</text><text class="date">{{review.date}}</text></view>

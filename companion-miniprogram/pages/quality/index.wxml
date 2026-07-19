@@ -1,0 +1,63 @@
+<view class="page-shell quality-page">
+  <view wx:if="{{loading && !quality}}" class="loading-state">正在加载服务质量数据…</view>
+
+  <block wx:if="{{quality}}">
+    <view class="quality-head card">
+      <view class="score-block">
+        <text>{{quality.rating}}</text>
+        <text>综合服务评分</text>
+      </view>
+      <view class="quality-state">
+        <view class="{{quality.openImprovementCount ? 'warning' : 'good'}}">
+          <view></view>
+          <text>{{quality.openImprovementCount ? quality.openImprovementCount + ' 项待改进' : '当前无待整改项'}}</text>
+        </view>
+        <text>累计 {{quality.serviceCount}} 次服务</text>
+      </view>
+    </view>
+
+    <view class="metric-grid">
+      <view class="metric-card card"><text>{{quality.onTimeRate}}%</text><text>准时到达率</text></view>
+      <view class="metric-card card"><text>{{quality.completionRate}}%</text><text>服务完成率</text></view>
+    </view>
+
+    <view class="section-card card">
+      <text class="section-title">用户认可标签</text>
+      <view class="tag-list">
+        <view wx:for="{{quality.positiveTags}}" wx:key="name" class="quality-tag">
+          <text>{{item.name}}</text>
+          <text>{{item.count}} 次</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section-head">
+      <text>近期服务反馈</text>
+      <text>仅显示脱敏内容</text>
+    </view>
+
+    <view class="feedback-list">
+      <view
+        wx:for="{{quality.feedback}}"
+        wx:key="id"
+        class="feedback-card card tap-feedback"
+        data-task-id="{{item.taskId}}"
+        bindtap="openFeedbackTask"
+      >
+        <view class="feedback-head">
+          <view><text>{{item.serviceName}}</text><text>{{item.dateText}}</text></view>
+          <view class="feedback-score">{{item.rating}}.0</view>
+        </view>
+        <text class="feedback-comment">{{item.comment}}</text>
+        <view class="feedback-tags">
+          <text wx:for="{{item.tags}}" wx:key="*this">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="quality-notice">
+      <text>质量数据说明</text>
+      <text>{{quality.notice}}</text>
+    </view>
+  </block>
+</view>

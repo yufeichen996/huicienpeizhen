@@ -1,0 +1,1 @@
+Component({properties:{favorited:{type:Boolean,value:false},label:{type:Boolean,value:false}},data:{busy:false},methods:{toggle(){if(this.data.busy)return;this.setData({busy:true});this.triggerEvent('toggle');setTimeout(()=>this.setData({busy:false}),350)}}})

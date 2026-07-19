@@ -1,0 +1,2 @@
+import { userService } from '../../services/user'
+Component({ properties:{visible:{type:Boolean,value:false}},data:{loading:false},methods:{stop(){},close(){this.triggerEvent('close')},openAgreement(){wx.navigateTo({url:'/pages/agreement/index?type=user'})},openPrivacy(){wx.navigateTo({url:'/pages/privacy/index'})},async login(){if(this.data.loading)return;this.setData({loading:true});await userService.simulateLogin();this.setData({loading:false});this.triggerEvent('success');wx.showToast({title:'登录成功',icon:'success'})}}})

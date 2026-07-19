@@ -1,0 +1,1 @@
+<view class="article-page"><custom-navbar eyebrow="协议与规则" title="{{title}}"/><view class="article"><view class="notice">开发阶段示例内容，正式上线前需由法律及合规人员审核，不构成最终正式协议。</view><text class="date">更新日期：{{updated}} · 生效日期：{{effective}}</text><view class="section" wx:for="{{sections}}" wx:key="*this"><text>{{index + 1}}. {{item[0]}}</text><text>{{item[1]}}</text></view></view></view>

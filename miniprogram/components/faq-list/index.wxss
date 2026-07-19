@@ -1,0 +1,1 @@
+@import "/styles/tokens.wxss";.faq{padding:22rpx 0;border-bottom:1rpx solid var(--color-divider)}.faq:last-child{border:0}.faq>view{display:flex;justify-content:space-between;font-weight:650}.answer{display:block;margin-top:14rpx;color:var(--color-text-secondary);font-size:23rpx;line-height:1.6}

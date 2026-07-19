@@ -1,0 +1,40 @@
+<view class="page-shell status-page">
+  <view class="status-card card">
+    <view class="status-symbol {{tone}}"><view class="status-dot"></view></view>
+    <text class="status-title">{{statusText}}</text>
+    <text class="status-description">{{description}}</text>
+
+    <view wx:if="{{application}}" class="application-summary">
+      <view><text>申请编号</text><text>{{application.applicationNo}}</text></view>
+      <view><text>申请人</text><text>{{application.name}} · {{application.phoneMasked}}</text></view>
+      <view><text>提交时间</text><text>{{submittedText}}</text></view>
+      <view wx:if="{{reviewedText}}"><text>审核时间</text><text>{{reviewedText}}</text></view>
+      <view><text>服务技能</text><text>{{skillText}}</text></view>
+      <view><text>服务医院</text><text>{{hospitalText}}</text></view>
+    </view>
+
+    <view wx:if="{{application.reviewReason}}" class="review-reason">
+      <text>审核意见</text>
+      <text>{{application.reviewReason}}</text>
+    </view>
+
+    <view class="notice">
+      <text>审核通过前不会接收任务</text>
+      <text>只有审核通过的公开档案才会进入客户端推荐池</text>
+    </view>
+
+    <button wx:if="{{canResubmit}}" class="primary-button tap-feedback" bindtap="resubmit">补充资料并重新提交</button>
+    <button wx:else class="primary-button tap-feedback" bindtap="contactPlatform">联系平台</button>
+
+    <view wx:if="{{canMockReview}}" class="mock-review">
+      <text>本地审核模拟</text>
+      <text>仅 Mock 环境可见，正式版本由运营后台审核。</text>
+      <view>
+        <button class="mock-reject tap-feedback" disabled="{{reviewBusy}}" bindtap="mockReject">模拟驳回</button>
+        <button class="mock-approve tap-feedback" loading="{{reviewBusy}}" disabled="{{reviewBusy}}" bindtap="mockApprove">模拟通过</button>
+      </view>
+    </view>
+
+    <button class="logout-button tap-feedback" bindtap="logout">退出当前账号</button>
+  </view>
+</view>

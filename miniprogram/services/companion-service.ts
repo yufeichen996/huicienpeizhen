@@ -1,0 +1,1 @@
+export { companionService } from './companion'

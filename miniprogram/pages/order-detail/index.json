@@ -1,0 +1,1 @@
+{ "navigationStyle": "custom", "usingComponents": { "custom-navbar": "/components/custom-navbar/index", "order-status": "/components/order-status/index", "order-timeline": "/components/order-timeline/index", "order-actions": "/components/order-actions/index", "confirm-dialog": "/components/confirm-dialog/index" } }

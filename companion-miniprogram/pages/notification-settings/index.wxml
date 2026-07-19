@@ -1,0 +1,41 @@
+<view class="page-shell notification-page">
+  <view class="hero-card">
+    <view class="bell-mark">
+      <view class="bell-body"></view>
+      <view class="bell-dot"></view>
+    </view>
+    <view class="hero-copy">
+      <text>及时掌握任务变化</text>
+      <text>新任务、任务变更和服务时间均可通过微信服务通知提醒。</text>
+    </view>
+  </view>
+
+  <view class="subscription-card card">
+    <view wx:for="{{items}}" wx:key="key" class="subscription-row">
+      <view class="row-copy">
+        <view class="row-title">
+          <text>{{item.title}}</text>
+          <text class="status {{item.status === 'ACCEPTED' ? 'accepted' : item.status === 'BANNED' ? 'banned' : ''}}">{{item.statusText}}</text>
+        </view>
+        <text>{{item.description}}</text>
+      </view>
+      <button
+        class="row-action tap-feedback"
+        disabled="{{busyKey || !item.available}}"
+        data-key="{{item.key}}"
+        bindtap="enableOne"
+      >{{busyKey === item.key ? '处理中' : item.actionText}}</button>
+    </view>
+  </view>
+
+  <button class="primary-button tap-feedback" disabled="{{busyKey}}" bindtap="enableAll">
+    {{busyKey === 'ALL' ? '正在申请授权…' : '开启全部工作通知'}}
+  </button>
+  <button class="setting-button tap-feedback" bindtap="openWechatSettings">前往微信权限设置</button>
+
+  <view class="notice">
+    <text>使用说明</text>
+    <text>一次性订阅通常需要在登录、接受派单或抢单后重新获取发送机会。拒绝授权不会影响接单和服务。</text>
+    <text>微信通知仅显示任务状态和时间提醒，患者联系方式与就医信息仍需进入任务详情查看。</text>
+  </view>
+</view>

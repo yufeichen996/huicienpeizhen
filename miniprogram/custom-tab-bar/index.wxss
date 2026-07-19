@@ -1,0 +1,54 @@
+@import "/styles/tokens.wxss";
+
+.tab-shell {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(var(--tab-bar-height) + env(safe-area-inset-bottom));
+  padding: 8rpx 24rpx env(safe-area-inset-bottom);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(24rpx);
+}
+
+.tab-divider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1rpx;
+  background: var(--color-divider);
+}
+
+.tab-item {
+  width: 128rpx;
+  min-height: 88rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-tertiary);
+  background: transparent;
+}
+
+.tab-icon {
+  height: 38rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-text {
+  margin-top: 5rpx;
+  font-size: 22rpx;
+  line-height: 26rpx;
+  font-weight: 500;
+}
+
+.is-selected {
+  color: var(--color-primary);
+}

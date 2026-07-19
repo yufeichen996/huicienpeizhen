@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102238">
+  <title>汇慈恩陪诊 · 合作机构</title>
+  <link rel="stylesheet" href="/app.css?v=2">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div>
+          <strong>汇慈恩陪诊</strong>
+          <span>合作机构</span>
+        </div>
+      </div>
+
+      <nav aria-label="主要导航">
+        <button class="nav-item active" data-view="overview" data-permission="VIEW_DASHBOARD"><span>总</span>业务总览</button>
+        <button class="nav-item" data-view="publish" data-permission="PUBLISH_ORDER"><span>发</span>发布订单</button>
+        <button class="nav-item" data-view="orders" data-permission="MANAGE_ORDERS"><span>单</span>订单管理</button>
+      </nav>
+
+      <div class="sidebar-status">
+        <span class="status-light"></span>
+        <div>
+          <strong>统一订单服务</strong>
+          <small id="server-status">正在连接</small>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <button class="menu-button" id="menu-button" aria-label="打开导航">☰</button>
+        <div>
+          <p id="page-eyebrow">合作机构工作台</p>
+          <h1 id="page-title">业务总览</h1>
+        </div>
+        <div class="institution-chip">
+          <span>机构</span>
+          <div>
+            <strong id="institution-name">加载中</strong>
+            <small id="institution-contact">—</small>
+          </div>
+          <button class="logout-button" id="logout-button" type="button">退出</button>
+        </div>
+      </header>
+
+      <section class="view active" data-view-panel="overview">
+        <div class="command-card">
+          <div class="command-copy">
+            <p>今日调度</p>
+            <h2>每一张机构订单，都进入同一条履约链路。</h2>
+            <span>定向派单、平台匹配与抢单大厅共享统一订单、价格快照和状态记录。</span>
+            <button class="primary-action" data-open-view="publish" data-permission="PUBLISH_ORDER">发布新订单</button>
+          </div>
+          <div class="pulse-board" aria-label="订单流转示意">
+            <div class="pulse-line"></div>
+            <div class="pulse-step done"><span></span><strong>机构发布</strong><small>客户资料已校验</small></div>
+            <div class="pulse-step current"><span></span><strong>等待接单</strong><small>进入调度或抢单</small></div>
+            <div class="pulse-step"><span></span><strong>履约服务</strong><small>全程节点留痕</small></div>
+          </div>
+        </div>
+
+        <div class="metric-grid">
+          <article><span>全部订单</span><strong id="metric-total">0</strong><small>合作机构累计</small></article>
+          <article><span>抢单大厅</span><strong id="metric-published">0</strong><small>当前待抢订单</small></article>
+          <article><span>待服务</span><strong id="metric-pending">0</strong><small>已安排陪诊师</small></article>
+          <article><span>已完成</span><strong id="metric-completed">0</strong><small>已完成履约</small></article>
+        </div>
+
+        <div class="section-card">
+          <div class="section-heading">
+            <div><span>实时队列</span><h2>最近订单</h2></div>
+            <button class="text-action" data-open-view="orders" data-permission="MANAGE_ORDERS">查看全部订单 →</button>
+          </div>
+          <div id="recent-orders" class="order-table-wrap"></div>
+        </div>
+      </section>
+
+      <section class="view" data-view-panel="publish">
+        <div class="section-heading page-heading">
+          <div><span>合作机构下单</span><h2>发布陪诊服务需求</h2></div>
+          <p>客户敏感资料只用于履约，抢单前不会向陪诊师公开。</p>
+        </div>
+
+        <form id="order-form" class="form-layout">
+          <div class="form-card">
+            <div class="form-card-title"><span>01</span><div><h3>客户与就诊信息</h3><p>填写履约所需的最少信息</p></div></div>
+            <div class="field-grid">
+              <label>客户姓名<input name="patientName" maxlength="20" required placeholder="例如：王先生"></label>
+              <label>客户手机号<input name="patientPhone" inputmode="numeric" maxlength="11" required placeholder="11 位手机号"></label>
+              <label>年龄段
+                <select name="patientAgeGroup">
+                  <option value="60–69 岁">60–69 岁</option>
+                  <option value="70–79 岁">70–79 岁</option>
+                  <option value="80 岁以上">80 岁以上</option>
+                  <option value="其他">其他</option>
+                </select>
+              </label>
+              <label>服务项目<select id="service-select" name="serviceId" required></select></label>
+              <label>就诊医院<input name="hospitalName" required placeholder="例如：上海瑞金医院"></label>
+              <label>就诊科室<input name="departmentName" required placeholder="例如：心内科"></label>
+              <label>预约日期<input name="bookingDate" type="date" required></label>
+              <label>预约时间<input name="bookingTime" type="time" required></label>
+            </div>
+          </div>
+
+          <div class="form-card">
+            <div class="form-card-title"><span>02</span><div><h3>接单方式</h3><p>选择平台调度策略</p></div></div>
+            <div class="dispatch-options" id="dispatch-options">
+              <label><input type="radio" name="dispatchMode" value="MARKET" checked><span><strong>发布到抢单大厅</strong><small>符合条件的陪诊师先抢先得</small></span></label>
+              <label><input type="radio" name="dispatchMode" value="PLATFORM"><span><strong>平台智能匹配</strong><small>由调度人员选择合适陪诊师</small></span></label>
+              <label><input type="radio" name="dispatchMode" value="DIRECT"><span><strong>定向陪诊师</strong><small>直接向指定陪诊师发送任务</small></span></label>
+            </div>
+            <label id="companion-field" class="companion-field hidden">选择陪诊师<select id="companion-select" name="companionId"></select></label>
+            <label class="full-field">服务需求
+              <input name="specialNeeds" placeholder="多个需求请用顿号分隔，例如：轮椅协助、报告领取">
+            </label>
+            <label class="full-field">机构备注<textarea name="remark" maxlength="300" placeholder="仅填写履约所需补充说明，不填写诊断结论"></textarea></label>
+          </div>
+
+          <aside class="quote-card">
+            <span>订单价格快照</span>
+            <div><small>服务价格</small><strong id="quote-service">¥0.00</strong></div>
+            <div><small>陪诊师价格</small><strong id="quote-companion">¥0.00</strong></div>
+            <div class="quote-total"><small>预计合计</small><strong id="quote-total">¥0.00</strong></div>
+            <p>订单创建后保存价格快照，后续平台调价不会改变本单金额。</p>
+            <button type="submit" name="action" value="publish" class="primary-action">创建并发布</button>
+            <button type="submit" name="action" value="draft" class="secondary-action">保存草稿</button>
+          </aside>
+        </form>
+      </section>
+
+      <section class="view" data-view-panel="orders">
+        <div class="section-heading page-heading">
+          <div><span>统一订单</span><h2>合作机构订单管理</h2></div>
+          <button class="primary-action compact" data-open-view="publish" data-permission="PUBLISH_ORDER">发布订单</button>
+        </div>
+        <div class="section-card">
+          <div class="toolbar">
+            <input id="order-search" placeholder="搜索订单号、客户、医院">
+            <select id="order-status-filter">
+              <option value="">全部状态</option>
+              <option value="DRAFT">草稿</option>
+              <option value="PUBLISHED">抢单中</option>
+              <option value="PENDING_ASSIGNMENT">待匹配</option>
+              <option value="PENDING_CONFIRMATION">待陪诊师确认</option>
+              <option value="PENDING_SERVICE">待服务</option>
+              <option value="COMPLETED">已完成</option>
+              <option value="CANCELLED">已取消</option>
+            </select>
+          </div>
+          <div id="orders-table" class="order-table-wrap"></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <section class="login-screen" id="login-screen">
+    <form class="login-card" id="login-form">
+      <div class="brand-mark login-mark" aria-hidden="true"></div>
+      <p>汇慈恩陪诊</p>
+      <h1>合作机构登录</h1>
+      <span>使用平台为本机构开通的账号密码登录。</span>
+      <label>登录账号<input name="loginName" autocomplete="username" required maxlength="32"></label>
+      <label>登录密码<input name="password" type="password" autocomplete="current-password" required minlength="8"></label>
+      <button class="primary-action" type="submit">登录机构工作台</button>
+      <small id="login-environment">测试环境 · 不依赖微信登录</small>
+    </form>
+  </section>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/org-config.js"></script>
+  <script src="/app.js?v=2" type="module"></script>
+</body>
+</html>

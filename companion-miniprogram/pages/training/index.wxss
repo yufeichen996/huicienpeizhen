@@ -1,0 +1,207 @@
+.training-page {
+  padding-top: 20rpx;
+}
+
+.loading-state {
+  padding: 180rpx 0;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.training-head {
+  position: relative;
+  padding: 30rpx;
+  overflow: hidden;
+}
+
+.head-copy text {
+  display: block;
+}
+
+.head-copy text:first-child {
+  color: var(--color-text-secondary);
+  font-size: 21rpx;
+}
+
+.head-copy text:last-child {
+  margin-top: 8rpx;
+  font-size: 34rpx;
+  font-weight: 750;
+}
+
+.progress-ring {
+  position: absolute;
+  top: 26rpx;
+  right: 28rpx;
+  width: 90rpx;
+  height: 90rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 10rpx solid var(--color-primary-soft);
+  border-radius: 50%;
+  color: var(--color-primary);
+}
+
+.progress-ring text {
+  font-size: 21rpx;
+  font-weight: 750;
+}
+
+.progress-track {
+  height: 12rpx;
+  margin-top: 28rpx;
+  overflow: hidden;
+  border-radius: 999rpx;
+  background: var(--color-divider);
+}
+
+.progress-track view {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-primary);
+}
+
+.section-head {
+  margin: 34rpx 4rpx 16rpx;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.section-head text:first-child {
+  font-size: 29rpx;
+  font-weight: 750;
+}
+
+.section-head text:last-child {
+  color: var(--color-text-secondary);
+  font-size: 19rpx;
+}
+
+.course-card {
+  margin-bottom: 18rpx;
+  padding: 28rpx;
+  text-align: left;
+}
+
+.course-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 18rpx;
+}
+
+.course-index {
+  width: 56rpx;
+  height: 56rpx;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18rpx;
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+  font-size: 22rpx;
+  font-weight: 750;
+}
+
+.course-copy {
+  min-width: 0;
+  flex: 1;
+  text-align: left;
+}
+
+.course-copy > view {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text-tertiary);
+  font-size: 18rpx;
+}
+
+.course-title,
+.course-summary {
+  display: block;
+}
+
+.course-title {
+  margin-top: 8rpx;
+  font-size: 27rpx;
+  font-weight: 750;
+}
+
+.course-summary {
+  margin-top: 7rpx;
+  color: var(--color-text-secondary);
+  font-size: 21rpx;
+  line-height: 34rpx;
+}
+
+.course-progress {
+  margin-top: 22rpx;
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+}
+
+.course-progress > view {
+  height: 10rpx;
+  flex: 1;
+  overflow: hidden;
+  border-radius: 999rpx;
+  background: var(--color-divider);
+}
+
+.course-progress > view > view {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-success);
+}
+
+.course-progress > text {
+  width: 110rpx;
+  flex: none;
+  color: var(--color-text-secondary);
+  font-size: 18rpx;
+  text-align: right;
+}
+
+.course-action {
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: 100%;
+  height: 72rpx;
+  margin-top: 12rpx;
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  padding: 0 16rpx 0 0;
+  align-self: flex-start;
+  justify-content: flex-start !important;
+  color: var(--color-primary);
+  font-size: 22rpx;
+  font-weight: 700;
+  text-align: left !important;
+}
+
+.training-notice {
+  margin-top: 22rpx;
+  padding: 24rpx 28rpx;
+  border-radius: 22rpx;
+  background: var(--color-primary-soft);
+}
+
+.training-notice text {
+  display: block;
+}
+
+.training-notice text:first-child {
+  color: var(--color-primary);
+  font-size: 21rpx;
+  font-weight: 700;
+}
+
+.training-notice text:last-child {
+  margin-top: 7rpx;
+  color: var(--color-text-secondary);
+  font-size: 20rpx;
+  line-height: 34rpx;
+}

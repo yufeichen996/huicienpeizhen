@@ -1,0 +1,1 @@
+{ "navigationStyle":"custom", "enablePullDownRefresh":true, "backgroundColor":"#F2F2F7", "usingComponents": { "custom-navbar":"/components/custom-navbar/index", "search-bar":"/components/search-bar/index", "favorite-button":"/components/favorite-button/index", "empty-state":"/components/empty-state/index", "login-sheet":"/components/login-sheet/index" } }

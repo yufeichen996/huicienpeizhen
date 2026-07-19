@@ -1,0 +1,44 @@
+<view class="page-shell training-page">
+  <view wx:if="{{loading && !overview}}" class="loading-state">正在加载培训课程…</view>
+
+  <block wx:if="{{overview}}">
+    <view class="training-head card">
+      <view class="head-copy">
+        <text>必修培训进度</text>
+        <text>{{overview.requiredCompleted}} / {{overview.requiredTotal}} 已完成</text>
+      </view>
+      <view class="progress-ring">
+        <text>{{completionPercent}}%</text>
+      </view>
+      <view class="progress-track"><view style="width: {{completionPercent}}%"></view></view>
+    </view>
+
+    <view class="section-head">
+      <text>必修课程</text>
+      <text>围绕安全、边界与隐私</text>
+    </view>
+
+    <view class="course-list">
+      <view wx:for="{{courses}}" wx:key="id" class="course-card card">
+        <view class="course-top">
+          <view class="course-index">{{index + 1}}</view>
+          <view class="course-copy">
+            <view><text>{{item.category}}</text><text>{{item.durationMinutes}} 分钟</text></view>
+            <text class="course-title">{{item.title}}</text>
+            <text class="course-summary">{{item.summary}}</text>
+          </view>
+        </view>
+        <view class="course-progress">
+          <view><view style="width: {{item.progress}}%"></view></view>
+          <text>{{item.statusText}}</text>
+        </view>
+        <button class="course-action tap-feedback" data-course-id="{{item.id}}" bindtap="openCourse">{{item.actionText}} ›</button>
+      </view>
+    </view>
+
+    <view class="training-notice">
+      <text>使用说明</text>
+      <text>{{overview.notice}}</text>
+    </view>
+  </block>
+</view>

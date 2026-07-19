@@ -1,0 +1,1 @@
+<view wx:if="{{items.length}}"><view class="head"><text>搜索历史</text><text bindtap="clear">清空</text></view><view class="chips"><view class="chip" wx:for="{{items}}" wx:key="*this"><text data-value="{{item}}" bindtap="select">{{item}}</text><text data-value="{{item}}" bindtap="remove">×</text></view></view></view>

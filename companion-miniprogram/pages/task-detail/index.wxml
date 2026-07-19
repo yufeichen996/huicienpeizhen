@@ -1,0 +1,107 @@
+<view class="page-shell page-with-footer detail-page">
+  <view wx:if="{{loading && !task}}" class="loading-state">正在加载任务详情…</view>
+
+  <block wx:if="{{task}}">
+    <view class="status-card card">
+      <view class="status-top">
+        <view class="companion-status-chip {{task.statusTone}}">{{task.statusText}}</view>
+        <text>{{task.orderNo}}</text>
+      </view>
+      <text class="status-title">{{task.serviceName}}</text>
+      <text class="status-desc">{{statusDescription}}</text>
+      <view class="appointment-emphasis">
+        <text>{{task.bookingText}}</text>
+        <text>{{task.locationText}} · {{task.departmentName}}</text>
+      </view>
+    </view>
+
+    <view class="section-card card">
+      <text class="section-title">预约信息</text>
+      <view class="detail-row"><text>预计时长</text><text>{{task.serviceDurationMinutes}} 分钟</text></view>
+      <view class="detail-row"><text>医院院区</text><text>{{task.locationText}}</text></view>
+      <view class="detail-row"><text>就诊科室</text><text>{{task.departmentName}}</text></view>
+      <view wx:if="{{task.meetingPoint}}" class="detail-row"><text>集合地点</text><text>{{task.meetingPoint}}</text></view>
+      <button wx:if="{{task.meetingPoint}}" class="inline-action tap-feedback" bindtap="showNavigation">查看到院指引</button>
+    </view>
+
+    <view class="section-card card">
+      <text class="section-title">就诊人信息</text>
+      <block wx:if="{{task.patientDisplayName}}">
+        <view class="detail-row"><text>就诊人</text><text>{{task.patientDisplayName}}</text></view>
+        <view class="detail-row"><text>联系电话</text><text>{{task.patientPhoneMasked}}</text></view>
+        <button wx:if="{{task.privacyCallEnabled}}" class="inline-action tap-feedback" bindtap="privacyCall">使用隐私通话联系</button>
+      </block>
+      <view wx:else class="privacy-tip">
+        <text>接单后显示必要信息</text>
+        <text>为保护用户隐私，当前仅提供任务匹配所需信息。</text>
+      </view>
+    </view>
+
+    <view wx:if="{{task.specialNeeds.length || task.remark}}" class="section-card card">
+      <text class="section-title">特殊需求与备注</text>
+      <view wx:if="{{task.specialNeeds.length}}" class="need-list">
+        <view wx:for="{{task.specialNeeds}}" wx:key="*this" class="need-chip">{{item}}</view>
+      </view>
+      <text wx:if="{{task.remark}}" class="remark">{{task.remark}}</text>
+    </view>
+
+    <view class="section-card card">
+      <text class="section-title">服务边界</text>
+      <view class="boundary-item"><view></view><text>提供流程引导、陪同和信息记录，不作诊断或治疗建议。</text></view>
+      <view class="boundary-item"><view></view><text>费用变化、退款和新增服务必须由平台确认。</text></view>
+      <view class="boundary-item"><view></view><text>突发身体不适时优先联系医院工作人员并报告平台。</text></view>
+    </view>
+
+    <view wx:if="{{task.status !== 'OFFERED'}}" class="section-card card">
+      <text class="section-title">履约时间线</text>
+      <view class="timeline">
+        <view wx:for="{{timeline}}" wx:key="status" class="timeline-item {{item.state}}">
+          <view class="timeline-rail"><view class="timeline-dot"></view><view class="timeline-line"></view></view>
+          <view class="timeline-copy">
+            <text>{{item.title}}</text>
+            <text>{{item.time || (item.state === 'current' ? '当前节点' : '待完成')}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{detail.exceptions.length}}" class="section-card card">
+      <view class="section-title-row">
+        <text class="section-title">异常记录</text>
+        <text>{{detail.exceptions.length}} 条</text>
+      </view>
+      <view wx:for="{{detail.exceptions}}" wx:key="id" class="exception-row">
+        <view><text>{{item.ticketNo}}</text><text>{{item.description}}</text></view>
+        <text>{{item.status === 'OPEN' ? '平台处理中' : item.status}}</text>
+      </view>
+    </view>
+
+    <view wx:if="{{expenses.length || canRecordExpense}}" class="section-card card">
+      <view class="section-title-row">
+        <text class="section-title">费用与票据</text>
+        <text>{{expenses.length}} 条</text>
+      </view>
+      <view wx:for="{{expenses}}" wx:key="id" class="expense-row">
+        <view><text>{{item.categoryText}}</text><text>{{item.description}}</text></view>
+        <view><text>{{item.amountText}}</text><text>{{item.statusText}}</text></view>
+      </view>
+      <button wx:if="{{canRecordExpense}}" class="inline-action tap-feedback" bindtap="recordExpense">记录垫付费用</button>
+    </view>
+  </block>
+</view>
+
+<view wx:if="{{task && (primaryActionText || secondaryActionText)}}" class="fixed-action-bar">
+  <button
+    wx:if="{{secondaryActionText}}"
+    class="secondary-button tap-feedback"
+    disabled="{{actionBusy}}"
+    bindtap="onSecondaryAction"
+  >{{secondaryActionText}}</button>
+  <button
+    wx:if="{{primaryActionText}}"
+    class="primary-button tap-feedback"
+    loading="{{actionBusy}}"
+    disabled="{{actionBusy}}"
+    bindtap="onPrimaryAction"
+  >{{primaryActionText}}</button>
+</view>

@@ -1,0 +1,14 @@
+@import "/styles/tokens.wxss";
+.booking-page { min-height: 100vh; padding-bottom: calc(148rpx + env(safe-area-inset-bottom)); background: var(--color-page); }
+.booking-content { padding: 24rpx var(--page-gutter) 40rpx; }
+.section-title { display: block; margin: 24rpx 4rpx 16rpx; font-size: 32rpx; font-weight: 700; }
+.section-note { display: block; margin: -8rpx 4rpx 18rpx; color: var(--color-text-secondary); font-size: 24rpx; line-height: 1.55; }
+.card { padding: var(--card-padding); border-radius: var(--radius-card); background: #fff; box-shadow: var(--shadow-card); }
+.field-row { display: flex; align-items: center; justify-content: space-between; min-height: 88rpx; border-bottom: 1rpx solid var(--color-divider); }
+.field-row:last-child { border-bottom: 0; }
+.field-label { font-weight: 600; }
+.field-value { max-width: 440rpx; color: var(--color-primary); text-align: right; }
+.placeholder { color: var(--color-text-tertiary); }
+.sheet-mask { position: fixed; z-index: 50; inset: 0; background: rgba(0,0,0,.38); }
+.sheet { position: absolute; right: 0; bottom: 0; left: 0; max-height: 72vh; padding: 34rpx var(--page-gutter) calc(30rpx + env(safe-area-inset-bottom)); border-radius: var(--sheet-radius) var(--sheet-radius) 0 0; background: #fff; box-shadow: var(--shadow-sheet); }
+.sheet-title { display: block; margin-bottom: 22rpx; font-size: 34rpx; font-weight: 700; }

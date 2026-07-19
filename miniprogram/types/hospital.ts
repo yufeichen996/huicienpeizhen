@@ -1,0 +1,2 @@
+export interface HospitalDepartmentGroup { name: string; departments: string[] }
+export interface Hospital { id: string; name: string; shortName: string; icon: string; level: string; city: string; district: string; address: string; introduction: string; coverImage?: string; tags: string[]; departmentGroups: HospitalDepartmentGroup[]; supportedServiceIds: string[]; isPopular: boolean; isPartner: boolean }

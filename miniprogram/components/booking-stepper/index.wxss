@@ -1,0 +1,9 @@
+@import "/styles/tokens.wxss";
+.stepper { display: flex; padding: 28rpx 20rpx 22rpx; background: #fff; }
+.step { position: relative; z-index: 1; flex: 1; display: flex; align-items: center; flex-direction: column; gap: 10rpx; color: var(--color-text-tertiary); }
+.line { position: absolute; z-index: -1; top: 22rpx; right: 50%; width: 100%; height: 4rpx; background: #d8d8dd; }
+.dot { display: flex; align-items: center; justify-content: center; width: 44rpx; height: 44rpx; border-radius: 50%; background: #d8d8dd; color: #fff; font-size: 24rpx; font-weight: 700; }
+.label { font-size: 21rpx; white-space: nowrap; }
+.done .dot, .current .dot { background: var(--color-primary); }
+.done .line, .current .line { background: var(--color-primary); }
+.current .label { color: var(--color-primary); font-weight: 650; }

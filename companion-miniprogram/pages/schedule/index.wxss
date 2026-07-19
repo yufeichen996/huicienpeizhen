@@ -1,0 +1,132 @@
+.schedule-page {
+  padding-top: 20rpx;
+}
+
+.loading-state {
+  padding: 180rpx 0;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.schedule-summary {
+  padding: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.schedule-summary text {
+  display: block;
+}
+
+.schedule-summary text:first-child {
+  color: var(--color-text-secondary);
+  font-size: 21rpx;
+}
+
+.schedule-summary text:last-child {
+  margin-top: 5rpx;
+  color: var(--color-primary);
+  font-size: 34rpx;
+  font-weight: 750;
+}
+
+.timezone-label {
+  padding: 9rpx 14rpx;
+  border-radius: 999rpx;
+  color: var(--color-text-secondary);
+  background: var(--color-page);
+  font-size: 18rpx;
+}
+
+.schedule-card {
+  margin-top: 20rpx;
+  padding: 0 26rpx;
+}
+
+.schedule-row {
+  min-height: 126rpx;
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  border-bottom: 1rpx solid var(--color-divider);
+}
+
+.schedule-row:last-child {
+  border-bottom: 0;
+}
+
+.date-block {
+  width: 76rpx;
+  flex: none;
+  text-align: center;
+}
+
+.date-block text {
+  display: block;
+}
+
+.date-block text:first-child {
+  font-size: 23rpx;
+  font-weight: 700;
+}
+
+.date-block text:last-child {
+  margin-top: 4rpx;
+  color: var(--color-text-secondary);
+  font-size: 19rpx;
+}
+
+.day-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.day-copy text {
+  display: block;
+}
+
+.day-copy text:first-child {
+  font-size: 23rpx;
+  font-weight: 650;
+}
+
+.day-copy text:last-child {
+  margin-top: 6rpx;
+  overflow: hidden;
+  color: var(--color-text-secondary);
+  font-size: 19rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.has-task .day-copy text:first-child {
+  color: var(--color-primary);
+}
+
+.schedule-row switch {
+  flex: none;
+  transform: scale(0.82);
+  transform-origin: right center;
+}
+
+.schedule-notice {
+  margin-top: 20rpx;
+  padding: 24rpx 28rpx;
+  border-radius: 22rpx;
+  color: var(--color-text-secondary);
+  background: var(--color-primary-soft);
+}
+
+.schedule-notice text {
+  display: block;
+  font-size: 20rpx;
+  line-height: 34rpx;
+}
+
+.schedule-notice text:first-child {
+  margin-bottom: 6rpx;
+  color: var(--color-primary);
+  font-size: 22rpx;
+  font-weight: 700;
+}

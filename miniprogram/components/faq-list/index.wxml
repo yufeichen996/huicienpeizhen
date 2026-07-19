@@ -1,0 +1,1 @@
+<view><view class="faq" wx:for="{{items}}" wx:key="question" data-index="{{index}}" bindtap="toggle"><view><text>{{item.question}}</text><text>{{active === index ? '−' : '+'}}</text></view><text wx:if="{{active === index}}" class="answer">{{item.answer}}</text></view></view>

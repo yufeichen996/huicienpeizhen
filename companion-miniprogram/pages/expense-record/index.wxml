@@ -1,0 +1,70 @@
+<view class="page-shell page-with-footer expense-page">
+  <view wx:if="{{loading && !task}}" class="loading-state">正在加载任务费用信息…</view>
+
+  <block wx:if="{{task}}">
+    <view class="task-reference card">
+      <text>关联任务</text>
+      <text>{{task.serviceName}}</text>
+      <text>{{task.hospitalName}} · {{task.departmentName}}</text>
+    </view>
+
+    <view class="form-card card">
+      <text class="form-section-title">1. 费用类型</text>
+      <view class="category-grid">
+        <view
+          wx:for="{{categoryOptions}}"
+          wx:key="value"
+          class="category-item {{category === item.value ? 'active' : ''}}"
+          data-category="{{item.value}}"
+          bindtap="selectCategory"
+        >{{item.label}}</view>
+      </view>
+    </view>
+
+    <view class="form-card card">
+      <text class="form-section-title">2. 金额与用途</text>
+      <text class="field-label">垫付金额（元）</text>
+      <view class="amount-input">
+        <text>¥</text>
+        <input type="digit" maxlength="10" value="{{amountText}}" placeholder="0.00" bindinput="onAmountInput" />
+      </view>
+      <text class="field-label field-gap">费用用途</text>
+      <textarea
+        class="text-area short"
+        maxlength="200"
+        value="{{description}}"
+        placeholder="请说明具体项目，不记录无关医疗隐私"
+        bindinput="onDescriptionInput"
+      ></textarea>
+    </view>
+
+    <view class="form-card card">
+      <text class="form-section-title">3. 票据或支付凭证</text>
+      <text class="receipt-tip">至少 1 张，最多 3 张。请遮挡与本次费用无关的敏感信息。</text>
+      <view class="receipt-grid">
+        <view
+          wx:for="{{receiptPaths}}"
+          wx:key="*this"
+          class="receipt-item"
+          data-path="{{item}}"
+          bindtap="previewReceipt"
+        >
+          <image src="{{item}}" mode="aspectFill"></image>
+          <button class="remove-receipt" data-index="{{index}}" catchtap="removeReceipt">×</button>
+        </view>
+        <button wx:if="{{receiptPaths.length < 3}}" class="add-receipt tap-feedback" bindtap="addReceipt">
+          <text>＋</text><text>添加凭证</text>
+        </button>
+      </view>
+    </view>
+
+    <view class="expense-notice">
+      <text>费用规则</text>
+      <text>本页只记录垫付事实。新增费用、退款和用户应付金额均需平台确认。</text>
+    </view>
+  </block>
+</view>
+
+<view wx:if="{{task}}" class="fixed-action-bar">
+  <button class="primary-button tap-feedback" loading="{{submitting}}" disabled="{{submitting}}" bindtap="submit">提交费用记录</button>
+</view>

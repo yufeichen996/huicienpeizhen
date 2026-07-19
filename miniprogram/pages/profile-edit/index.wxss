@@ -1,0 +1,1 @@
+@import "../profile/shared.wxss";.avatar-card{display:flex;align-items:center;gap:22rpx;margin-bottom:22rpx;padding:26rpx;border-radius:var(--radius-card);background:#fff}.avatar-card image{width:100rpx;height:100rpx;border-radius:50%}.avatar-card text{flex:1;color:var(--color-text-secondary);font-size:23rpx;line-height:1.5}

@@ -1,0 +1,118 @@
+<view class="safe-page home-page">
+  <custom-navbar show-message bind:message="onMessageTap" />
+
+  <view class="content">
+    <view class="welcome-block">
+      <text class="welcome-kicker"></text>
+      <text class="welcome-title">您好，需要什么帮助？</text>
+    </view>
+
+    <button class="search-box tap-feedback" bindtap="onSearchTap" aria-label="搜索医院、科室">
+      <view class="search-icon"><app-icon name="search" variant="outline" size="40" label="搜索" /></view>
+      <text class="search-placeholder">搜索医院、科室…</text>
+      <view class="search-arrow"><app-icon name="chevron-right" variant="outline" size="28" /></view>
+    </button>
+
+    <view class="hero-card">
+      <image class="hero-image" src="/assets/images/shanghai-hospital-hero.svg" mode="aspectFill" aria-label="上海医院" />
+      <view class="hero-gradient"></view>
+      <view class="hero-content">
+        <text class="hero-kicker">专属服务</text>
+        <text class="hero-title">专业陪诊师\n陪您安心就医</text>
+        <button class="hero-button tap-feedback" bindtap="onHeroBook">立即预约</button>
+      </view>
+    </view>
+
+    <view class="section-label">快捷入口</view>
+    <app-card>
+      <view class="feature-grid">
+        <view wx:for="{{services}}" wx:key="id" class="feature-cell">
+          <button
+            class="quick-entry tap-feedback"
+            data-service-id="{{item.id}}"
+            bindtap="onQuickServiceTap"
+            aria-label="{{item.name}}"
+          >
+            <app-icon name="{{item.iconName}}" variant="tile" size="108" label="{{item.name}}" />
+            <text class="quick-label">{{item.name}}</text>
+          </button>
+        </view>
+      </view>
+    </app-card>
+
+    <app-card extra-class="trust-card">
+      <view class="trust-grid">
+        <view class="trust-item">
+          <view class="trust-icon"><app-icon name="verified" variant="outline" size="28" label="实名认证" /></view>
+          <text class="trust-title">实名认证</text>
+          <text class="trust-value">100% 审核</text>
+        </view>
+        <view class="trust-separator"></view>
+        <view class="trust-item">
+          <view class="trust-icon"><app-icon name="shield" variant="outline" size="28" label="服务保障" /></view>
+          <text class="trust-title">服务保障</text>
+          <text class="trust-value">先服务后付款</text>
+        </view>
+        <view class="trust-separator"></view>
+        <view class="trust-item">
+          <view class="trust-icon"><app-icon name="rating" variant="outline" size="28" label="好评率" /></view>
+          <text class="trust-title">好评率</text>
+          <text class="trust-value">98.6%</text>
+        </view>
+      </view>
+    </app-card>
+
+    <view class="section-heading">
+      <text class="section-title">推荐陪诊员</text>
+      <button class="section-action tap-feedback" bindtap="onViewAllCompanions">查看全部 <app-icon name="chevron-right" variant="outline" size="28" /></button>
+    </view>
+    <view class="companion-list">
+      <companion-card
+        wx:for="{{companions}}"
+        wx:key="id"
+        companion="{{item}}"
+        bind:select="onCompanionSelect"
+      />
+    </view>
+
+    <view class="section-heading hospital-heading">
+      <text class="section-title">常见就诊医院</text>
+      <text class="city-badge">仅限上海</text>
+    </view>
+    <scroll-view class="hospital-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+      <view class="hospital-row">
+        <hospital-chip
+          wx:for="{{hospitals}}"
+          wx:key="id"
+          hospital="{{item}}"
+          bind:select="onHospitalSelect"
+        />
+      </view>
+    </scroll-view>
+
+    <view class="scope-notice">
+      <text class="scope-icon">i</text>
+      <text class="scope-text">本平台提供第三方陪诊服务，与所列医院不存在隶属、合作或推荐关系。医院名称仅用于说明陪诊服务地点，具体服务情况以预约确认结果为准。</text>
+    </view>
+  </view>
+
+  <bottom-sheet visible="{{companionSheetVisible}}" title="陪诊员详情" bind:close="onCloseCompanionSheet">
+    <view wx:if="{{selectedCompanion}}" class="sheet-profile">
+      <image class="sheet-avatar" src="{{selectedCompanion.avatar}}" mode="aspectFill" />
+      <view class="sheet-name-row">
+        <text class="sheet-name">{{selectedCompanion.name}}</text>
+        <view class="sheet-rating"><app-icon name="rating" variant="outline" size="26" label="评分" /><text>{{selectedCompanion.rating}}</text></view>
+      </view>
+      <text class="sheet-meta">{{selectedCompanion.serviceCount}} 次服务 · 响应 {{selectedCompanion.responseTime}}</text>
+      <view class="sheet-tags">
+        <text wx:for="{{selectedCompanion.tags}}" wx:key="*this" class="sheet-tag">{{item}}</text>
+      </view>
+      <text class="sheet-bio">{{selectedCompanion.bio}}</text>
+      <button class="sheet-profile-link tap-feedback" bindtap="onViewCompanionProfile">查看完整资料 <app-icon name="chevron-right" variant="outline" size="28" /></button>
+      <view class="sheet-footer">
+        <view class="sheet-price"><text class="sheet-price-label">服务价格</text><view><text class="sheet-price-currency">¥</text><text class="sheet-price-amount">{{selectedCompanion.priceFrom}}</text><text class="sheet-price-unit"> 起/次</text></view></view>
+        <button class="primary-button tap-feedback" bindtap="onBookCompanion"><text>立即预约</text></button>
+      </view>
+    </view>
+  </bottom-sheet>
+</view>

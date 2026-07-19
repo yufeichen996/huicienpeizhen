@@ -1,0 +1,9 @@
+@import "/styles/tokens.wxss";
+.bar { position: fixed; z-index: 30; right: 0; bottom: 0; left: 0; display: flex; align-items: center; gap: 20rpx; padding: 20rpx var(--page-gutter) calc(20rpx + env(safe-area-inset-bottom)); border-top: 1rpx solid var(--color-divider); background: rgba(255,255,255,.96); }
+button { height: var(--button-height); border-radius: var(--radius-button); font-size: 30rpx; font-weight: 650; }
+.primary { flex: 1; background: var(--color-primary); color: #fff; }
+.primary.disabled { background: #b8d9ff; color: rgba(255,255,255,.86); }
+.secondary { width: 180rpx; background: var(--color-primary-soft); color: var(--color-primary); }
+.total { min-width: 150rpx; display: flex; flex-direction: column; }
+.total-label { color: var(--color-text-secondary); font-size: 22rpx; }
+.total-price { color: var(--color-primary); font-size: 38rpx; font-weight: 750; }

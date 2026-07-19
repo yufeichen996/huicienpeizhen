@@ -1,0 +1,1 @@
+<view class="login-page"><custom-navbar eyebrow="汇慈恩陪诊" title="登录"/><view class="hint">登录后继续刚才的操作</view><login-sheet visible="{{visible}}" bindclose="close" bindsuccess="success"/></view>

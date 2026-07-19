@@ -1,0 +1,15 @@
+<view class="nav" style="padding-top: {{top}}px; height: {{totalHeight}}px;">
+  <view class="nav-content" style="height: {{height}}px;">
+    <button wx:if="{{canGoBack}}" class="back-button tap-feedback" style="left: {{backLeft}}px;" bindtap="goBack" aria-label="返回">
+      <view class="back-glyph"></view>
+    </button>
+    <view class="nav-copy {{title ? 'nav-copy-centered' : 'nav-copy-leading'}}" style="left: {{title ? titleInset : 16}}px; right: {{titleInset}}px;">
+      <text class="eyebrow">{{eyebrow}}</text>
+      <text wx:if="{{title}}" class="nav-title">{{title}}</text>
+    </view>
+    <button wx:if="{{showMessage}}" class="message-button tap-feedback" style="right: {{capsuleRight}}px;" bindtap="onMessage" aria-label="消息">
+      <app-icon name="message" variant="outline" size="40" label="消息" />
+      <view class="unread-dot"></view>
+    </button>
+  </view>
+</view>

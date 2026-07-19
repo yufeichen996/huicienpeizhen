@@ -1,0 +1,50 @@
+<view class="page-shell tasks-page">
+  <view class="filter-card card">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="key"
+      class="filter-item {{activeFilter === item.key ? 'active' : ''}}"
+      data-filter="{{item.key}}"
+      bindtap="selectFilter"
+    >
+      <text class="filter-label">{{item.label}}</text>
+      <text class="filter-count">{{item.count}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{loading && !tasks.length}}" class="loading-state">正在加载任务…</view>
+
+  <view wx:if="{{visibleTasks.length}}" class="task-list">
+    <view
+      wx:for="{{visibleTasks}}"
+      wx:key="id"
+      class="list-task-card card tap-feedback"
+      data-task-id="{{item.id}}"
+      bindtap="openTask"
+    >
+      <view class="task-card-head">
+        <view class="companion-status-chip {{item.statusTone}}">{{item.statusText}}</view>
+        <text class="task-order">{{item.orderNo}}</text>
+      </view>
+      <text class="task-name">{{item.serviceName}}</text>
+      <text class="task-time">{{item.bookingText}}</text>
+      <view class="task-location">
+        <view class="location-mark"></view>
+        <view>
+          <text>{{item.locationText}}</text>
+          <text>{{item.departmentName}}</text>
+        </view>
+      </view>
+      <view class="task-card-foot">
+        <text>{{item.patientDisplayName || '接单后显示就诊人信息'}}</text>
+        <view class="task-link">{{item.primaryActionText}} <text>›</text></view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:elif="{{!loading}}" class="empty-card card">
+    <view class="empty-mark"><view></view></view>
+    <text class="empty-title">当前分类暂无任务</text>
+    <text class="empty-desc">新任务或状态变化后，下拉页面即可刷新。</text>
+  </view>
+</view>

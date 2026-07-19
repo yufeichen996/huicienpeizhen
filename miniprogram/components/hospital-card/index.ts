@@ -1,0 +1,1 @@
+Component({properties:{hospital:{type:Object,value:{}}},methods:{detail(){this.triggerEvent('detail',{id:(this.properties.hospital as {id:string}).id})},favorite(){this.triggerEvent('favorite',{id:(this.properties.hospital as {id:string}).id})}}})

@@ -1,0 +1,67 @@
+page,
+:host {
+  --color-primary: #007aff;
+  --color-primary-soft: #eaf4ff;
+  --color-purple: #af52de;
+  --color-purple-soft: #f6ecfb;
+  --color-green: #34c759;
+  --color-green-soft: #eaf8ee;
+  --color-orange: #ff9500;
+  --color-orange-soft: #fff4e3;
+  --color-page: #f2f2f7;
+  --color-card: #ffffff;
+  --color-text-primary: #1c1c1e;
+  --color-text-secondary: #6e6e73;
+  --color-text-tertiary: #8e8e93;
+  --color-divider: rgba(60, 60, 67, 0.12);
+  --color-success: #34c759;
+  --color-warning: #ff9500;
+  --color-error: #ff3b30;
+  --radius-card: 26rpx;
+  --radius-button: 24rpx;
+  --radius-pill: 999rpx;
+  --page-gutter: 32rpx;
+  --card-padding: 28rpx;
+  --button-height: 88rpx;
+  --button-height-small: 72rpx;
+  --input-height: 88rpx;
+  --icon-container-size: 108rpx;
+  --icon-glyph-size: 46rpx;
+  --section-gap: 32rpx;
+  --card-gap: 24rpx;
+  --avatar-size: 112rpx;
+  --tab-bar-height: 104rpx;
+  --sheet-radius: 36rpx;
+  --font-title: 68rpx;
+  --font-nav: 34rpx;
+  --font-body: 30rpx;
+  --font-caption: 26rpx;
+  --font-small: 22rpx;
+  --shadow-card: 0 12rpx 34rpx rgba(25, 73, 120, 0.07);
+  --shadow-sheet: 0 -20rpx 60rpx rgba(22, 47, 72, 0.14);
+}
+
+button {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.2;
+}
+
+button::after {
+  border: 0;
+}
+
+.tap-feedback {
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.tap-feedback:active {
+  opacity: 0.72;
+  transform: scale(0.985);
+}

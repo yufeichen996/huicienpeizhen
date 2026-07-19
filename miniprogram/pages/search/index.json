@@ -1,0 +1,1 @@
+{ "navigationStyle":"custom", "usingComponents": { "custom-navbar":"/components/custom-navbar/index", "search-bar":"/components/search-bar/index", "search-history":"/components/search-history/index", "empty-state":"/components/empty-state/index" } }

@@ -1,0 +1,1 @@
+@import "/styles/tokens.wxss";.login-page{min-height:100vh;background:var(--color-page)}.hint{padding:140rpx 30rpx;color:var(--color-text-secondary);text-align:center}

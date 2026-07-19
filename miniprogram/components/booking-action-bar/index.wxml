@@ -1,0 +1,5 @@
+<view class="bar">
+  <view class="total" wx:if="{{totalText}}"><text class="total-label">合计</text><text class="total-price">¥{{totalText}}</text></view>
+  <button wx:if="{{secondaryText}}" class="secondary tap-feedback" bindtap="onSecondary">{{secondaryText}}</button>
+  <button class="primary tap-feedback {{disabled ? 'disabled' : ''}}" loading="{{loading}}" bindtap="onPrimary">{{primaryText}}</button>
+</view>

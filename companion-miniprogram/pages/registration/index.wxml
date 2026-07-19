@@ -1,0 +1,120 @@
+<view class="page-shell page-with-footer registration-page">
+  <view class="registration-head card">
+    <text>{{resubmitting ? '重新提交陪诊师申请' : '申请成为汇慈恩陪诊师'}}</text>
+    <text>资料将由平台人工审核，审核通过后才会获得服务权限并进入客户端推荐。</text>
+  </view>
+
+  <view class="form-card card">
+    <text class="form-section-title">1. 身份与经历</text>
+    <text class="field-label">真实姓名</text>
+    <input class="field-input" maxlength="10" value="{{name}}" placeholder="请输入姓名" bindinput="onNameInput" />
+
+    <text class="field-label field-gap">手机号</text>
+    <input class="field-input" type="number" maxlength="11" value="{{phone}}" placeholder="用于审核联系" bindinput="onPhoneInput" />
+
+    <text class="field-label field-gap">身份证号</text>
+    <input class="field-input" password maxlength="18" value="{{identityNumber}}" placeholder="仅用于实名认证审核" bindinput="onIdentityInput" />
+
+    <text class="field-label field-gap">性别</text>
+    <view class="gender-row">
+      <view class="{{gender === 'female' ? 'active' : ''}}" data-gender="female" bindtap="selectGender">女性</view>
+      <view class="{{gender === 'male' ? 'active' : ''}}" data-gender="male" bindtap="selectGender">男性</view>
+    </view>
+
+    <text class="field-label field-gap">相关从业年限</text>
+    <view class="years-input">
+      <input type="number" maxlength="2" value="{{workingYearsText}}" placeholder="0" bindinput="onYearsInput" />
+      <text>年</text>
+    </view>
+  </view>
+
+  <view class="form-card card">
+    <text class="form-section-title">2. 服务能力</text>
+    <text class="field-label">可提供服务（至少一项）</text>
+    <view class="selection-grid">
+      <view
+        wx:for="{{skills}}"
+        wx:key="id"
+        class="{{item.selected ? 'active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="toggleSkill"
+      >{{item.name}}</view>
+    </view>
+
+    <text class="field-label field-gap">熟悉医院（至少一家）</text>
+    <view class="selection-grid">
+      <view
+        wx:for="{{hospitals}}"
+        wx:key="id"
+        class="{{item.selected ? 'active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="toggleHospital"
+      >{{item.name}}</view>
+    </view>
+
+    <text class="field-label field-gap">服务区域（至少一个）</text>
+    <view class="selection-grid districts">
+      <view
+        wx:for="{{districts}}"
+        wx:key="name"
+        class="{{item.selected ? 'active' : ''}}"
+        data-district="{{item.name}}"
+        bindtap="toggleDistrict"
+      >{{item.name}}</view>
+    </view>
+
+    <text class="field-label field-gap">个人介绍</text>
+    <textarea class="text-area" maxlength="300" value="{{introduction}}" placeholder="介绍相关经历、擅长服务和沟通特点，至少 10 个字" bindinput="onIntroductionInput"></textarea>
+  </view>
+
+  <view class="form-card card">
+    <text class="form-section-title">3. 审核材料</text>
+    <text class="field-label">身份证正反面（2 张）</text>
+    <view class="upload-grid">
+      <view
+        wx:for="{{identityImagePaths}}"
+        wx:key="*this"
+        class="upload-item"
+        data-group="identity"
+        data-path="{{item}}"
+        bindtap="previewImage"
+      >
+        <image src="{{item}}" mode="aspectFill"></image>
+        <button class="remove-upload" data-group="identity" data-index="{{index}}" catchtap="removeImage">×</button>
+      </view>
+      <button wx:if="{{identityImagePaths.length < 2}}" class="add-upload tap-feedback" bindtap="chooseIdentityImages"><text>＋</text><text>身份证照片</text></button>
+    </view>
+
+    <text class="field-label field-gap">相关资质证明（至少 1 张）</text>
+    <view class="upload-grid">
+      <view
+        wx:for="{{certificatePaths}}"
+        wx:key="*this"
+        class="upload-item"
+        data-group="certificate"
+        data-path="{{item}}"
+        bindtap="previewImage"
+      >
+        <image src="{{item}}" mode="aspectFill"></image>
+        <button class="remove-upload" data-group="certificate" data-index="{{index}}" catchtap="removeImage">×</button>
+      </view>
+      <button wx:if="{{certificatePaths.length < 3}}" class="add-upload tap-feedback" bindtap="chooseCertificates"><text>＋</text><text>资质证明</text></button>
+    </view>
+  </view>
+
+  <view class="privacy-notice">
+    <text>隐私说明</text>
+    <text>当前为 Mock 演示，请勿上传真实敏感证件。页面提交后只保存脱敏号码和图片数量，不保存临时图片路径。</text>
+  </view>
+
+  <checkbox-group bindchange="onAgreementChange">
+    <label class="agreement">
+      <checkbox value="accepted" checked="{{agreementAccepted}}" color="#1261D3" />
+      <text>我确认资料真实，并同意《陪诊师申请与审核规则》《隐私政策》</text>
+    </label>
+  </checkbox-group>
+</view>
+
+<view class="fixed-action-bar">
+  <button class="primary-button tap-feedback" loading="{{loading}}" disabled="{{loading}}" bindtap="submit">{{resubmitting ? '重新提交审核' : '提交审核'}}</button>
+</view>

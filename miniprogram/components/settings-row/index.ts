@@ -1,0 +1,1 @@
+Component({properties:{icon:{type:String,value:''},variant:{type:String,value:'tile'},tone:{type:String,value:'blue'},title:{type:String,value:''},value:{type:String,value:''},last:{type:Boolean,value:false}},methods:{tap(){this.triggerEvent('tap')}}})

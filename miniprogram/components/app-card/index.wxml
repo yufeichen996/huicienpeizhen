@@ -1,0 +1,3 @@
+<view class="card {{padding ? 'has-padding' : ''}} {{extraClass}}">
+  <slot></slot>
+</view>

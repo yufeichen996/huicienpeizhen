@@ -1,0 +1,42 @@
+<view class="page-shell exceptions-page">
+  <view class="exception-summary card">
+    <view><text>{{openCount}}</text><text>待平台处理</text></view>
+    <text>异常独立留痕，不覆盖任务进度</text>
+  </view>
+
+  <view class="filter-bar">
+    <view class="{{filter === 'open' ? 'active' : ''}}" data-filter="open" bindtap="selectFilter">待处理</view>
+    <view class="{{filter === 'all' ? 'active' : ''}}" data-filter="all" bindtap="selectFilter">全部</view>
+    <view class="{{filter === 'resolved' ? 'active' : ''}}" data-filter="resolved" bindtap="selectFilter">已结束</view>
+  </view>
+
+  <view wx:if="{{loading && !exceptions.length}}" class="loading-state">正在加载异常工单…</view>
+
+  <view wx:if="{{visibleExceptions.length}}" class="exception-list">
+    <view wx:for="{{visibleExceptions}}" wx:key="id" class="ticket-card card">
+      <view class="ticket-head">
+        <view class="urgency-chip {{item.urgencyTone}}">{{item.urgencyText}}</view>
+        <text>{{item.ticketNo}}</text>
+      </view>
+      <text class="ticket-category">{{item.categoryText}}</text>
+      <text class="ticket-desc">{{item.description}}</text>
+      <view class="ticket-meta">
+        <text>{{item.submittedText}}</text>
+        <text>{{item.statusText}}</text>
+      </view>
+      <view wx:if="{{item.resolution}}" class="resolution">
+        <text>平台处理结论</text>
+        <text>{{item.resolution}}</text>
+      </view>
+      <button class="ticket-task-link tap-feedback" data-task-id="{{item.taskId}}" bindtap="openTask">查看关联任务 ›</button>
+    </view>
+  </view>
+
+  <view wx:elif="{{!loading}}" class="empty-card card">
+    <view class="empty-mark"><view></view></view>
+    <text class="empty-title">当前没有待处理异常</text>
+    <text class="empty-desc">服务过程遇到问题时，可从任务详情或服务执行页提交异常。</text>
+  </view>
+
+  <button class="platform-button tap-feedback" bindtap="contactPlatform">联系平台调度与客服</button>
+</view>

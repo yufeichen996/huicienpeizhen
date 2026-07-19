@@ -1,0 +1,51 @@
+<view class="login-page">
+  <view class="brand">
+    <view class="brand-mark" aria-label="汇慈恩陪诊">
+      <view class="cross cross-horizontal"></view>
+      <view class="cross cross-vertical"></view>
+    </view>
+    <text class="brand-name">汇慈恩陪诊师</text>
+    <text class="brand-desc">专业履约工作台</text>
+  </view>
+
+  <view class="login-card card">
+    <text class="card-title">登录后开始工作</text>
+    <view class="benefit-row">
+      <text class="benefit-index">01</text>
+      <view><text class="benefit-title">接收平台任务</text><text class="benefit-desc">及时确认派单与服务安排</text></view>
+    </view>
+    <view class="benefit-row">
+      <text class="benefit-index">02</text>
+      <view><text class="benefit-title">记录履约节点</text><text class="benefit-desc">出发、到院和服务过程全程留痕</text></view>
+    </view>
+    <view class="benefit-row">
+      <text class="benefit-index">03</text>
+      <view><text class="benefit-title">快速处理异常</text><text class="benefit-desc">需要帮助时立即联系平台</text></view>
+    </view>
+  </view>
+
+  <view class="login-footer">
+    <button
+      class="primary-button tap-feedback"
+      disabled="{{loading}}"
+      loading="{{loading}}"
+      bindtap="onLogin"
+    >
+      已有陪诊师登录
+    </button>
+    <button class="register-button tap-feedback" disabled="{{loading}}" bindtap="openRegistration">申请成为陪诊师</button>
+    <button
+      wx:if="{{hasApplication}}"
+      class="application-button tap-feedback"
+      disabled="{{loading}}"
+      bindtap="resumeApplication"
+    >查看已有申请 · {{applicationStatusText}}</button>
+    <text class="environment-note">当前为接口 Mock 环境，不会调用真实微信授权。</text>
+    <checkbox-group class="agreement-group" bindchange="onAgreementChange">
+      <label class="agreement">
+        <checkbox value="accepted" checked="{{agreementAccepted}}" color="#1261D3" />
+        <text>我已阅读并同意《陪诊师服务协议》和《隐私政策》</text>
+      </label>
+    </checkbox-group>
+  </view>
+</view>

@@ -1,0 +1,41 @@
+<view class="page-shell messages-page">
+  <view class="message-toolbar">
+    <view class="filter-group">
+      <view class="{{filter === 'all' ? 'active' : ''}}" data-filter="all" bindtap="selectFilter">全部</view>
+      <view class="{{filter === 'unread' ? 'active' : ''}}" data-filter="unread" bindtap="selectFilter">未读 {{unreadCount}}</view>
+    </view>
+    <button class="read-all tap-feedback" disabled="{{!unreadCount || actionBusy}}" bindtap="markAllRead">全部已读</button>
+  </view>
+
+  <view wx:if="{{loading && !messages.length}}" class="loading-state">正在加载平台消息…</view>
+
+  <view wx:if="{{visibleMessages.length}}" class="message-list">
+    <view
+      wx:for="{{visibleMessages}}"
+      wx:key="id"
+      class="message-card card tap-feedback {{item.read ? 'read' : 'unread'}}"
+      data-message-id="{{item.id}}"
+      bindtap="openMessage"
+    >
+      <view class="message-type {{item.tone}}">
+        <view></view>
+      </view>
+      <view class="message-copy">
+        <view class="message-head">
+          <text>{{item.typeText}}</text>
+          <text>{{item.timeText}}</text>
+        </view>
+        <text class="message-title">{{item.title}}</text>
+        <text class="message-content">{{item.content}}</text>
+        <text wx:if="{{item.taskId}}" class="message-link">查看关联任务 ›</text>
+      </view>
+      <view wx:if="{{!item.read}}" class="unread-dot"></view>
+    </view>
+  </view>
+
+  <view wx:elif="{{!loading}}" class="empty-card card">
+    <view class="empty-symbol"><view></view></view>
+    <text class="empty-title">{{filter === 'unread' ? '没有未读消息' : '暂无平台消息'}}</text>
+    <text class="empty-desc">任务关键状态仍以任务接口为准，消息仅用于提醒。</text>
+  </view>
+</view>

@@ -1,0 +1,31 @@
+{
+  "name": "huicienpeizhen-miniprogram",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "typecheck:client": "tsc --noEmit",
+    "typecheck:companion": "tsc -p companion-miniprogram/tsconfig.json --noEmit",
+    "typecheck": "npm run typecheck:client && npm run typecheck:companion",
+    "check:json": "node scripts/check-json.mjs",
+    "check:brand": "node scripts/check-brand.mjs",
+    "check:structure": "node scripts/check-miniprogram.mjs",
+    "test:booking": "node scripts/check-booking.mjs",
+    "test:order": "node scripts/check-order.mjs",
+    "test:profile": "node scripts/check-profile.mjs",
+    "test:catalog": "node scripts/check-catalog.mjs",
+    "test:companion": "node scripts/check-companion-state.mjs && node scripts/check-companion-workflow.mjs && node scripts/check-companion-structure.mjs",
+    "test:subscriptions": "node scripts/check-subscriptions.mjs",
+    "test:server": "node server/test.mjs",
+    "server": "node server/index.mjs",
+    "server:test": "node --env-file=.env.test server/index.mjs",
+    "db:migrate:test": "node --env-file=.env.test server/migrate.mjs",
+    "build:portals:test": "node --env-file=.env.test scripts/build-portals.mjs",
+    "test:prelaunch": "node --env-file=.env.test server/prelaunch-test.mjs && node server/http-integration-test.mjs",
+    "check:quality": "node scripts/check-quality.mjs",
+    "check": "npm run typecheck && npm run check:json && npm run check:brand && npm run check:structure && npm run test:booking && npm run test:order && npm run test:profile && npm run test:catalog && npm run test:companion && npm run test:subscriptions && npm run test:server && npm run check:quality"
+  },
+  "devDependencies": {
+    "miniprogram-api-typings": "^4.0.7",
+    "typescript": "^5.9.3"
+  }
+}

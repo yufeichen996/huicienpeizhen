@@ -1,0 +1,1 @@
+<button class="app-button type-{{type}} size-{{size}} {{block?'block':''}}" disabled="{{disabled}}" loading="{{loading}}" bindtap="tap"><app-icon wx:if="{{icon&&!loading}}" name="{{icon}}" size="18"/><slot/></button>

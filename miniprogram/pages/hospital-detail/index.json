@@ -1,0 +1,1 @@
+{ "navigationStyle":"custom", "usingComponents": { "custom-navbar":"/components/custom-navbar/index", "favorite-button":"/components/favorite-button/index", "login-sheet":"/components/login-sheet/index" } }

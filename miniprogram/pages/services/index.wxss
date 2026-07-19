@@ -1,0 +1,1 @@
+@import "../catalog/shared.wxss";.sort-control{margin-bottom:18rpx;padding:17rpx 20rpx;border-radius:18rpx;background:#fff;color:var(--color-text-secondary);font-size:23rpx;text-align:right}
