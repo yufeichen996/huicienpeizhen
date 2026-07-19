@@ -315,6 +315,52 @@ input:focus, select:focus, textarea:focus { border-color: #6b9fe8; box-shadow: 0
 }
 .institution-access-card footer small { color: var(--muted); font-size: 10px; }
 
+.account-security-note {
+  margin-bottom: 22px; padding: 18px 20px; display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto; align-items: center; gap: 14px;
+  border: 1px solid #cce9df; border-radius: 18px; background: #effaf6;
+}
+.account-security-mark {
+  width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px;
+  color: #0f7455; background: #d8f3e8; font-size: 12px; font-weight: 800;
+}
+.account-security-note strong, .account-security-note small { display: block; }
+.account-security-note strong { font-size: 13px; }
+.account-security-note small { margin-top: 5px; color: #5f786f; font-size: 10px; line-height: 1.55; }
+.platform-account-create { margin-bottom: 22px; }
+.platform-account-form-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.platform-account-list { margin-top: 20px; display: grid; gap: 14px; }
+.platform-account-card {
+  padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: #fbfcfe;
+}
+.platform-account-card.current {
+  border-color: #8bd5bb; box-shadow: inset 3px 0 0 #42aa84; background: #fbfffd;
+}
+.platform-account-card header {
+  display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; align-items: center; gap: 12px;
+}
+.platform-account-avatar {
+  width: 42px; height: 42px; display: grid; place-items: center; border-radius: 13px;
+  color: #116e55; background: #e2f6ef; font-size: 14px; font-weight: 800;
+}
+.platform-account-card h3, .platform-account-card p { margin: 0; }
+.platform-account-card h3 { font-size: 15px; }
+.platform-account-card p { margin-top: 5px; color: var(--muted); font-size: 10px; }
+.platform-account-title { display: flex; align-items: center; gap: 8px; }
+.current-account-tag {
+  padding: 3px 7px; border-radius: 999px; color: #0f7657; background: #ddf5ec;
+  font-size: 9px; font-weight: 750;
+}
+.platform-account-grid {
+  margin-top: 18px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px;
+}
+.platform-account-card footer {
+  margin-top: 18px; padding-top: 14px; display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; border-top: 1px solid var(--line);
+}
+.platform-account-card footer small { display: block; color: var(--muted); font-size: 10px; line-height: 1.7; }
+.platform-account-card select:disabled { color: var(--muted); background: #f0f3f6; cursor: not-allowed; }
+
 .order-monitor-metrics { margin-top: 0; }
 .institution-order-stats { margin-top: 20px; overflow-x: auto; }
 .status-lane-head, .status-lane {
@@ -362,6 +408,7 @@ input:focus, select:focus, textarea:focus { border-color: #6b9fe8; box-shadow: 0
   .form-layout { grid-template-columns: 1fr; }
   .quote-card { position: static; grid-column: 1; grid-row: auto; }
   .access-account-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .platform-account-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 820px) {
@@ -374,12 +421,16 @@ input:focus, select:focus, textarea:focus { border-color: #6b9fe8; box-shadow: 0
   .dispatch-options { grid-template-columns: 1fr; }
   .price-row, .companion-price-row { grid-template-columns: 1fr 1fr; }
   .permission-fieldset { grid-template-columns: 1fr; }
+  .platform-account-form-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 560px) {
   .topbar { height: 82px; }
   .institution-chip { padding: 7px; }
   .institution-chip > span, .institution-chip small { display: none; }
+  .admin-portal .institution-chip { padding: 0; border: 0; background: transparent; }
+  .admin-portal .institution-chip strong { display: none; }
+  .admin-portal .logout-button { margin-left: 0; }
   .command-copy { padding: 28px; }
   .pulse-board { padding: 34px 22px; }
   .metric-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -392,6 +443,13 @@ input:focus, select:focus, textarea:focus { border-color: #6b9fe8; box-shadow: 0
   .toolbar-note { margin-left: 0; }
   .price-row, .companion-price-row { grid-template-columns: 1fr; }
   .access-account-grid { grid-template-columns: 1fr; }
+  .account-security-note { grid-template-columns: 42px minmax(0, 1fr); }
+  .account-security-note .status-pill { grid-column: 2; justify-self: start; }
+  .platform-account-grid { grid-template-columns: 1fr; }
+  .platform-account-card { padding: 16px; }
+  .platform-account-card header { grid-template-columns: 38px minmax(0, 1fr); }
+  .platform-account-card header > .status-pill { grid-column: 2; justify-self: start; }
+  .platform-account-card footer { align-items: stretch; flex-direction: column; }
   .institution-access-card { padding: 16px; }
   .institution-access-card header { grid-template-columns: 38px minmax(0, 1fr); }
   .institution-access-card header .status-pill { grid-column: 2; justify-self: start; }

@@ -6,7 +6,7 @@
 
 - 已接入真实密码登录、Bearer Session、RBAC、机构数据隔离和操作审计。
 - 已接入机构订单创建、修改、发布、支付确认、派单/改派、取消和履约记录查询。
-- 已接入平台机构管理、全机构订单查看、服务/陪诊师价格、审核、结算和审计查询。
+- 已接入平台管理员账号、机构管理、全机构订单查看、服务/陪诊师价格、审核、结算和审计查询。
 - 微信登录、微信支付、小程序远程 API 和订阅消息发送均由功能开关控制，测试环境默认关闭。
 - C 端和陪诊师端仍以本地 Mock/Storage 为主，不能把当前测试环境视为生产可用。
 
@@ -30,9 +30,19 @@ npm run server:test
 测试账号只来自 `.env.test`，不得复制到生产：
 
 ```text
-机构：kangyi_admin
-平台：huicien_admin
+机构：kangyi_admin / HuicienTestOrg@2026
+平台：huicien_admin / HuicienTestAdmin@2026
 ```
+
+正式环境首次启动时，如果数据库尚无平台管理员，会读取下列变量创建首个账号：
+
+```text
+BOOTSTRAP_ADMIN_LOGIN_NAME
+BOOTSTRAP_ADMIN_DISPLAY_NAME
+BOOTSTRAP_ADMIN_PASSWORD
+```
+
+不得在生产环境使用测试密码。数据库已经存在管理员后，重启服务不会覆盖原账号或密码；登录后可在总管理端“账号管理”中新增管理员、启停账号和重置密码。
 
 ## 鉴权与权限
 

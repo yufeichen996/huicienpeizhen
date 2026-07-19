@@ -72,6 +72,19 @@ const mapInstitutionAccess = (row) => row && ({
   updatedAt: row.updated_at,
 })
 
+const mapPlatformAccount = (row) => row && ({
+  id: row.id,
+  loginName: row.login_name,
+  displayName: row.display_name,
+  status: row.status,
+  roleCode: row.role_code,
+  failedLoginCount: Number(row.failed_login_count || 0),
+  lockedUntil: row.locked_until,
+  lastLoginAt: row.last_login_at,
+  createdAt: row.created_at,
+  updatedAt: row.updated_at,
+})
+
 const mapOrderRaw = (row, decryptSensitive) => row && ({
   id: row.id,
   orderNo: row.order_no,
@@ -351,6 +364,32 @@ export function createRepository(filename, options = {}) {
       `).run(`node-${service[0]}-${code}`, service[0], code, index, title, description, required)
     }
   }
+  }
+
+  const platformAccountCount = db.prepare('SELECT COUNT(*) AS count FROM platform_accounts').get().count
+  if (platformAccountCount === 0) {
+    const loginName = String(options.bootstrapAdminLoginName || 'huicien_admin').trim()
+    const displayName = String(options.bootstrapAdminDisplayName || '平台总管理员').trim()
+    if (!/^[A-Za-z0-9_]{4,32}$/.test(loginName)) throw new Error('LOGIN_NAME_INVALID')
+    if (!displayName) throw new Error('DISPLAY_NAME_REQUIRED')
+    if (typeof demoAdminPassword !== 'string' || demoAdminPassword.length < 8) {
+      throw new Error('PASSWORD_INVALID')
+    }
+    const adminSalt = randomBytes(16).toString('hex')
+    db.prepare(`
+      INSERT INTO platform_accounts (
+        id, login_name, display_name, status, password_hash, password_salt,
+        role_code, created_at, updated_at
+      ) VALUES (?, ?, ?, 'ENABLED', ?, ?, 'PLATFORM_SUPER_ADMIN', ?, ?)
+    `).run(
+      'platform-admin-bootstrap',
+      loginName,
+      displayName,
+      passwordHash(demoAdminPassword, adminSalt),
+      adminSalt,
+      stamp,
+      stamp,
+    )
   }
 
   const getOrderRow = db.prepare(`
@@ -1065,6 +1104,132 @@ export function createRepository(filename, options = {}) {
         }
       }),
     }),
+
+    getPlatformAccount: (accountId) => {
+      const account = mapPlatformAccount(db.prepare(`
+        SELECT id, login_name, display_name, status, role_code,
+               failed_login_count, locked_until, last_login_at, created_at, updated_at
+        FROM platform_accounts WHERE id = ?
+      `).get(accountId))
+      if (!account) throw new Error('PLATFORM_ACCOUNT_NOT_FOUND')
+      return account
+    },
+
+    listPlatformAccounts: () => db.prepare(`
+      SELECT id, login_name, display_name, status, role_code,
+             failed_login_count, locked_until, last_login_at, created_at, updated_at
+      FROM platform_accounts
+      ORDER BY CASE status WHEN 'ENABLED' THEN 0 ELSE 1 END, created_at ASC
+    `).all().map(mapPlatformAccount),
+
+    createPlatformAccount: (input) => {
+      const loginName = String(input.loginName || '').trim()
+      const displayName = String(input.displayName || '').trim()
+      if (!/^[A-Za-z0-9_]{4,32}$/.test(loginName)) throw new Error('LOGIN_NAME_INVALID')
+      if (!displayName) throw new Error('DISPLAY_NAME_REQUIRED')
+      if (db.prepare('SELECT 1 FROM platform_accounts WHERE login_name = ?').get(loginName)) {
+        throw new Error('LOGIN_NAME_EXISTS')
+      }
+      const password = passwordFields(input.temporaryPassword)
+      const timestamp = now()
+      const id = `platform-account-${randomUUID()}`
+      db.prepare(`
+        INSERT INTO platform_accounts (
+          id, login_name, display_name, status, password_hash, password_salt,
+          role_code, created_at, updated_at
+        ) VALUES (?, ?, ?, 'ENABLED', ?, ?, 'PLATFORM_SUPER_ADMIN', ?, ?)
+      `).run(
+        id,
+        loginName,
+        displayName,
+        password.hash,
+        password.salt,
+        timestamp,
+        timestamp,
+      )
+      return mapPlatformAccount(db.prepare(`
+        SELECT id, login_name, display_name, status, role_code,
+               failed_login_count, locked_until, last_login_at, created_at, updated_at
+        FROM platform_accounts WHERE id = ?
+      `).get(id))
+    },
+
+    updatePlatformAccount: (accountId, input, actorId) => {
+      const current = mapPlatformAccount(db.prepare(`
+        SELECT id, login_name, display_name, status, role_code,
+               failed_login_count, locked_until, last_login_at, created_at, updated_at
+        FROM platform_accounts WHERE id = ?
+      `).get(accountId))
+      if (!current) throw new Error('PLATFORM_ACCOUNT_NOT_FOUND')
+
+      const loginName = input.loginName === undefined
+        ? current.loginName
+        : String(input.loginName || '').trim()
+      const displayName = input.displayName === undefined
+        ? current.displayName
+        : String(input.displayName || '').trim()
+      const status = input.accountStatus ?? current.status
+      if (!/^[A-Za-z0-9_]{4,32}$/.test(loginName)) throw new Error('LOGIN_NAME_INVALID')
+      if (!displayName) throw new Error('DISPLAY_NAME_REQUIRED')
+      if (!['ENABLED', 'DISABLED'].includes(status)) throw new Error('ACCOUNT_STATUS_INVALID')
+      if (accountId === actorId && status === 'DISABLED') {
+        throw new Error('PLATFORM_ACCOUNT_SELF_DISABLE')
+      }
+      if (status === 'DISABLED' && current.status === 'ENABLED') {
+        const enabledCount = db.prepare(`
+          SELECT COUNT(*) AS count FROM platform_accounts WHERE status = 'ENABLED'
+        `).get().count
+        if (enabledCount <= 1) throw new Error('PLATFORM_ACCOUNT_LAST_ENABLED')
+      }
+      const duplicate = db.prepare(`
+        SELECT id FROM platform_accounts WHERE login_name = ? AND id <> ?
+      `).get(loginName, accountId)
+      if (duplicate) throw new Error('LOGIN_NAME_EXISTS')
+
+      const reset = input.temporaryPassword ? passwordFields(input.temporaryPassword) : null
+      const timestamp = now()
+      db.exec('BEGIN IMMEDIATE')
+      try {
+        if (reset) {
+          db.prepare(`
+            UPDATE platform_accounts
+            SET login_name = ?, display_name = ?, status = ?,
+                password_hash = ?, password_salt = ?, failed_login_count = 0,
+                locked_until = NULL, updated_at = ?
+            WHERE id = ?
+          `).run(
+            loginName,
+            displayName,
+            status,
+            reset.hash,
+            reset.salt,
+            timestamp,
+            accountId,
+          )
+        } else {
+          db.prepare(`
+            UPDATE platform_accounts
+            SET login_name = ?, display_name = ?, status = ?, updated_at = ?
+            WHERE id = ?
+          `).run(loginName, displayName, status, timestamp, accountId)
+        }
+        if (reset || status === 'DISABLED') {
+          db.prepare(`
+            UPDATE auth_sessions SET revoked_at = ?
+            WHERE actor_type = 'PLATFORM' AND actor_id = ? AND revoked_at IS NULL
+          `).run(timestamp, accountId)
+        }
+        db.exec('COMMIT')
+      } catch (error) {
+        db.exec('ROLLBACK')
+        throw error
+      }
+      return mapPlatformAccount(db.prepare(`
+        SELECT id, login_name, display_name, status, role_code,
+               failed_login_count, locked_until, last_login_at, created_at, updated_at
+        FROM platform_accounts WHERE id = ?
+      `).get(accountId))
+    },
 
     listInstitutions: () => db.prepare(`
       SELECT

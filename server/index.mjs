@@ -12,6 +12,8 @@ const repository = createRepository(config.databaseFile, {
   seedData: config.seedTestData,
   demoInstitutionPassword: config.demoInstitutionPassword,
   demoAdminPassword: config.demoAdminPassword,
+  bootstrapAdminLoginName: config.bootstrapAdminLoginName,
+  bootstrapAdminDisplayName: config.bootstrapAdminDisplayName,
   dataEncryptionKey: config.dataEncryptionKey,
   tokenTtlSeconds: config.tokenTtlSeconds,
 })
@@ -50,6 +52,10 @@ const errorStatus = {
   LOGIN_NAME_INVALID: 422,
   LOGIN_NAME_EXISTS: 409,
   PASSWORD_INVALID: 422,
+  DISPLAY_NAME_REQUIRED: 422,
+  PLATFORM_ACCOUNT_NOT_FOUND: 404,
+  PLATFORM_ACCOUNT_SELF_DISABLE: 409,
+  PLATFORM_ACCOUNT_LAST_ENABLED: 409,
   ORDER_NOT_FOUND: 404,
   ORDER_NOT_DRAFT: 409,
   ORDER_CANNOT_WITHDRAW: 409,
@@ -98,6 +104,10 @@ const errorMessages = {
   LOGIN_NAME_INVALID: '登录账号需为 4–32 位字母、数字或下划线',
   LOGIN_NAME_EXISTS: '登录账号已存在',
   PASSWORD_INVALID: '临时密码至少需要 8 位',
+  DISPLAY_NAME_REQUIRED: '请填写管理员显示名称',
+  PLATFORM_ACCOUNT_NOT_FOUND: '平台管理员账号不存在',
+  PLATFORM_ACCOUNT_SELF_DISABLE: '不能停用当前正在使用的管理员账号',
+  PLATFORM_ACCOUNT_LAST_ENABLED: '平台至少需要保留一个启用的管理员账号',
   ORDER_NOT_FOUND: '订单不存在或不属于当前账号',
   ORDER_NOT_DRAFT: '只有草稿订单可以修改或发布',
   ORDER_CANNOT_WITHDRAW: '当前订单状态不能撤回',
@@ -335,8 +345,7 @@ const handleAuth = async (req, res, pathname, requestId) => {
     const data = session.actorType === 'INSTITUTION'
       ? repository.getInstitutionAccess(session.institutionId, session.actorId)
       : {
-        id: session.actorId,
-        roleCode: session.roleCode,
+        ...repository.getPlatformAccount(session.actorId),
         permissions: session.permissions,
       }
     return success(req, res, data, requestId)
@@ -546,6 +555,26 @@ const handleApi = async (req, res, url, requestId) => {
   if (method === 'GET' && pathname === '/api/admin/institutions') {
     requirePermission(req, 'MANAGE_INSTITUTIONS', 'PLATFORM')
     return success(req, res, repository.listInstitutions(), requestId)
+  }
+  if (method === 'GET' && pathname === '/api/admin/platform-accounts') {
+    requirePermission(req, 'MANAGE_ACCOUNTS', 'PLATFORM')
+    return success(req, res, repository.listPlatformAccounts(), requestId)
+  }
+  if (method === 'POST' && pathname === '/api/admin/platform-accounts') {
+    const session = requirePermission(req, 'MANAGE_ACCOUNTS', 'PLATFORM')
+    const account = repository.createPlatformAccount(await readBody(req))
+    audit(req, requestId, session, 'PLATFORM_ACCOUNT_CREATE', 'PLATFORM_ACCOUNT', account.id)
+    return success(req, res, account, requestId, 201)
+  }
+  if (method === 'PUT' && (params = match(pathname, '/api/admin/platform-accounts/:id/access'))) {
+    const session = requirePermission(req, 'MANAGE_ACCOUNTS', 'PLATFORM')
+    const account = repository.updatePlatformAccount(
+      params.id,
+      await readBody(req),
+      session.actorId,
+    )
+    audit(req, requestId, session, 'PLATFORM_ACCOUNT_UPDATE', 'PLATFORM_ACCOUNT', params.id)
+    return success(req, res, account, requestId)
   }
   if (method === 'POST' && pathname === '/api/admin/institutions') {
     const session = requirePermission(req, 'MANAGE_INSTITUTIONS', 'PLATFORM')

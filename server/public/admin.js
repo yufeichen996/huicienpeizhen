@@ -1,5 +1,7 @@
 const state = {
+  currentAccount: null,
   dashboard: null,
+  platformAccounts: [],
   institutions: [],
   institutionOrders: { summary: {}, institutions: [], orders: [] },
   services: [],
@@ -17,6 +19,7 @@ let accessToken = sessionStorage.getItem(TOKEN_KEY) || ''
 const pageMeta = {
   overview: ['平台控制台', '平台总览'],
   institutions: ['租户与权限', '机构账号'],
+  'platform-accounts': ['平台权限与安全', '账号管理'],
   'institution-orders': ['统一订单监控', '机构订单'],
   'service-pricing': ['价格中心', '服务价格'],
   'companion-pricing': ['价格中心', '陪诊师价格'],
@@ -44,6 +47,9 @@ const permissionMeta = {
 }
 
 const currency = (cents = 0) => `¥${(Number(cents) / 100).toFixed(2)}`
+const formatDateTime = (value) => value
+  ? new Date(value).toLocaleString('zh-CN', { hour12: false })
+  : '尚未登录'
 const escapeHtml = (value = '') => String(value)
   .replaceAll('&', '&amp;')
   .replaceAll('<', '&lt;')
@@ -92,6 +98,7 @@ function setView(view) {
   document.querySelector('#page-title').textContent = title
   document.body.classList.remove('menu-open')
   if (view === 'institutions') renderInstitutions()
+  if (view === 'platform-accounts') renderPlatformAccounts()
   if (view === 'institution-orders') renderInstitutionOrders()
   if (view === 'service-pricing') renderServicePricing()
   if (view === 'companion-pricing') renderCompanionPricing()
@@ -282,6 +289,51 @@ function renderInstitutions() {
     : '<div class="empty-state">尚未开通合作机构。</div>'
 }
 
+function renderPlatformAccounts() {
+  const list = document.querySelector('#platform-account-list')
+  list.innerHTML = state.platformAccounts.length
+    ? state.platformAccounts.map((account) => {
+      const current = account.id === state.currentAccount?.id
+      const locked = account.lockedUntil && new Date(account.lockedUntil) > new Date()
+      return `
+        <article class="platform-account-card ${current ? 'current' : ''}" data-platform-account-id="${account.id}">
+          <header>
+            <span class="platform-account-avatar">${escapeHtml(account.displayName.slice(0, 1))}</span>
+            <div>
+              <div class="platform-account-title">
+                <h3>${escapeHtml(account.displayName)}</h3>
+                ${current ? '<span class="current-account-tag">当前账号</span>' : ''}
+              </div>
+              <p>${escapeHtml(account.loginName)} · ${account.roleCode === 'PLATFORM_SUPER_ADMIN' ? '平台总管理员' : escapeHtml(account.roleCode)}</p>
+            </div>
+            <span class="status-pill ${account.status === 'ENABLED' ? (locked ? 'orange' : 'green') : 'gray'}">
+              ${account.status === 'ENABLED' ? (locked ? '暂时锁定' : '账号启用') : '账号停用'}
+            </span>
+          </header>
+          <div class="platform-account-grid">
+            <label>登录账号<input data-platform-field="loginName" value="${escapeHtml(account.loginName)}" minlength="4" maxlength="32"></label>
+            <label>管理员名称<input data-platform-field="displayName" value="${escapeHtml(account.displayName)}" maxlength="30"></label>
+            <label>账号状态
+              <select data-platform-field="accountStatus" ${current ? 'disabled' : ''}>
+                <option value="ENABLED" ${account.status === 'ENABLED' ? 'selected' : ''}>启用</option>
+                <option value="DISABLED" ${account.status === 'DISABLED' ? 'selected' : ''}>停用</option>
+              </select>
+            </label>
+            <label>重置密码<input data-platform-field="temporaryPassword" type="password" minlength="8" autocomplete="new-password" placeholder="不修改请留空"></label>
+          </div>
+          <footer>
+            <div>
+              <small>最近登录：${escapeHtml(formatDateTime(account.lastLoginAt))}</small>
+              <small>创建时间：${escapeHtml(formatDateTime(account.createdAt))}</small>
+            </div>
+            <button class="primary-action compact" data-save-platform-account="${account.id}">保存账号</button>
+          </footer>
+        </article>
+      `
+    }).join('')
+    : '<div class="empty-state">尚未创建平台管理员账号。</div>'
+}
+
 function renderServicePricing() {
   document.querySelector('#service-price-list').innerHTML = state.services.map((service) => `
     <div class="price-row" data-service-row="${service.id}">
@@ -322,7 +374,9 @@ async function loadAll() {
   try {
     const [
       health,
+      currentAccount,
       dashboard,
+      platformAccounts,
       institutions,
       institutionOrders,
       services,
@@ -333,7 +387,9 @@ async function loadAll() {
       operationLogs,
     ] = await Promise.all([
       api('/api/health'),
+      api('/api/auth/me'),
       api('/api/admin/dashboard'),
+      api('/api/admin/platform-accounts'),
       api('/api/admin/institutions'),
       api('/api/admin/institution-orders'),
       api('/api/services'),
@@ -343,7 +399,9 @@ async function loadAll() {
       api('/api/admin/expenses'),
       api('/api/admin/operation-logs?limit=100'),
     ])
+    state.currentAccount = currentAccount
     state.dashboard = dashboard
+    state.platformAccounts = platformAccounts
     state.institutions = institutions
     state.institutionOrders = institutionOrders
     state.services = services
@@ -352,12 +410,15 @@ async function loadAll() {
     state.exceptions = exceptions
     state.expenses = expenses
     state.operationLogs = operationLogs
+    document.querySelector('#admin-account-name').textContent = currentAccount.displayName || '平台管理员'
+    document.querySelector('#admin-account-login').textContent = currentAccount.loginName || '账号已登录'
     document.querySelector('#server-status').textContent = `${health.orders} 张订单 · 运行正常`
     document.querySelector('.status-light').classList.add('online')
     document.querySelector('#price-service-filter').innerHTML = services
       .map((service) => `<option value="${service.id}">${escapeHtml(service.name)}</option>`)
       .join('')
     renderDashboard()
+    renderPlatformAccounts()
     renderInstitutions()
     renderInstitutionOrders()
     renderServicePricing()
@@ -418,6 +479,40 @@ document.addEventListener('click', async (event) => {
   if (open) return setView(open.dataset.openView)
   if (event.target.closest('#menu-button')) {
     document.body.classList.toggle('menu-open')
+    return
+  }
+
+  const savePlatformAccount = event.target.closest('[data-save-platform-account]')
+  if (savePlatformAccount) {
+    const accountId = savePlatformAccount.dataset.savePlatformAccount
+    const card = document.querySelector(`[data-platform-account-id="${accountId}"]`)
+    const password = card.querySelector('[data-platform-field="temporaryPassword"]').value
+    savePlatformAccount.disabled = true
+    try {
+      await api(`/api/admin/platform-accounts/${accountId}/access`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          loginName: card.querySelector('[data-platform-field="loginName"]').value,
+          displayName: card.querySelector('[data-platform-field="displayName"]').value,
+          accountStatus: card.querySelector('[data-platform-field="accountStatus"]').value,
+          temporaryPassword: password || undefined,
+        }),
+      })
+      if (accountId === state.currentAccount?.id && password) {
+        accessToken = ''
+        sessionStorage.removeItem(TOKEN_KEY)
+        document.body.classList.add('auth-required')
+        toast('密码已更新，请使用新密码重新登录')
+        return
+      }
+      toast('管理员账号已保存')
+      await loadAll()
+      setView('platform-accounts')
+    } catch (error) {
+      toast(error.message, 'error')
+    } finally {
+      savePlatformAccount.disabled = false
+    }
     return
   }
 
@@ -539,6 +634,32 @@ document.querySelector('#institution-form').addEventListener('submit', async (ev
     setView('institutions')
   } catch (error) {
     toast(error.message, 'error')
+  }
+})
+
+document.querySelector('#platform-account-form').addEventListener('submit', async (event) => {
+  event.preventDefault()
+  const formElement = event.currentTarget
+  const form = new FormData(formElement)
+  const submit = formElement.querySelector('button[type="submit"]')
+  submit.disabled = true
+  try {
+    const account = await api('/api/admin/platform-accounts', {
+      method: 'POST',
+      body: JSON.stringify({
+        loginName: form.get('loginName'),
+        displayName: form.get('displayName'),
+        temporaryPassword: form.get('temporaryPassword'),
+      }),
+    })
+    toast(`${account.displayName} 的管理员账号已创建`)
+    formElement.reset()
+    await loadAll()
+    setView('platform-accounts')
+  } catch (error) {
+    toast(error.message, 'error')
+  } finally {
+    submit.disabled = false
   }
 })
 

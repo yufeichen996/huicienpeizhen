@@ -20,6 +20,62 @@ try {
     'PUBLISH_ORDER',
   )
 
+  const demoAdminLogin = repository.authenticatePlatform('huicien_admin', 'Admin@2026!')
+  const initialPlatformAccounts = repository.listPlatformAccounts()
+  assert.equal(initialPlatformAccounts.length, 1)
+  assert.equal(Object.hasOwn(initialPlatformAccounts[0], 'passwordHash'), false)
+  assert.equal(Object.hasOwn(initialPlatformAccounts[0], 'passwordSalt'), false)
+  assert.throws(
+    () => repository.updatePlatformAccount(
+      demoAdminLogin.account.id,
+      { accountStatus: 'DISABLED' },
+      demoAdminLogin.account.id,
+    ),
+    /PLATFORM_ACCOUNT_SELF_DISABLE/,
+  )
+  const platformOperator = repository.createPlatformAccount({
+    loginName: 'operation_admin',
+    displayName: '运营管理员',
+    temporaryPassword: 'Operation@2026',
+  })
+  assert.equal(platformOperator.status, 'ENABLED')
+  assert.equal(repository.listPlatformAccounts().length, 2)
+  repository.updatePlatformAccount(platformOperator.id, {
+    displayName: '运营负责人',
+    temporaryPassword: 'OperationNew@2026',
+  }, demoAdminLogin.account.id)
+  assert.equal(
+    repository.authenticatePlatform('operation_admin', 'OperationNew@2026').account.displayName,
+    '运营负责人',
+  )
+  repository.updatePlatformAccount(
+    platformOperator.id,
+    { accountStatus: 'DISABLED' },
+    demoAdminLogin.account.id,
+  )
+  assert.throws(
+    () => repository.authenticatePlatform('operation_admin', 'OperationNew@2026'),
+    /LOGIN_INVALID/,
+  )
+
+  const productionRepository = createRepository(':memory:', {
+    seedData: false,
+    demoAdminPassword: 'ProductionAdmin@2026',
+    bootstrapAdminLoginName: 'production_admin',
+    bootstrapAdminDisplayName: '生产平台管理员',
+  })
+  try {
+    assert.equal(productionRepository.listInstitutions().length, 0)
+    assert.equal(productionRepository.listPlatformAccounts().length, 1)
+    assert.equal(
+      productionRepository.authenticatePlatform('production_admin', 'ProductionAdmin@2026')
+        .account.displayName,
+      '生产平台管理员',
+    )
+  } finally {
+    productionRepository.close()
+  }
+
   const institution = repository.createInstitution({
     name: '测试合作机构',
     contactName: '李老师',

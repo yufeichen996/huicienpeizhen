@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#102238">
   <title>汇慈恩陪诊 · 平台总管理</title>
-  <link rel="stylesheet" href="/app.css?v=2">
+  <link rel="stylesheet" href="/app.css?v=3">
 </head>
 <body class="admin-portal">
   <div class="app-shell">
@@ -21,6 +21,7 @@
       <nav aria-label="平台总管理导航">
         <button class="nav-item active" data-view="overview"><span>台</span>平台总览</button>
         <button class="nav-item" data-view="institutions"><span>机</span>机构账号</button>
+        <button class="nav-item" data-view="platform-accounts"><span>管</span>账号管理</button>
         <button class="nav-item" data-view="institution-orders"><span>单</span>机构订单</button>
         <button class="nav-item" data-view="review-center"><span>审</span>审核中心</button>
         <button class="nav-item" data-view="operation-logs"><span>志</span>操作日志</button>
@@ -48,8 +49,8 @@
         <div class="institution-chip admin-chip">
           <span>总管理员</span>
           <div>
-            <strong>汇慈恩陪诊运营中心</strong>
-            <small>价格与机构权限</small>
+            <strong id="admin-account-name">汇慈恩陪诊运营中心</strong>
+            <small id="admin-account-login">价格与机构权限</small>
           </div>
           <button class="logout-button" id="logout-button" type="button">退出</button>
         </div>
@@ -121,6 +122,43 @@
             <p>停用账号会立即阻止机构端访问。</p>
           </div>
           <div id="institution-list" class="institution-access-list"></div>
+        </div>
+      </section>
+
+      <section class="view" data-view-panel="platform-accounts">
+        <div class="section-heading page-heading">
+          <div><span>平台权限与安全</span><h2>管理员账号</h2></div>
+          <p>创建独立管理员账号，停用或重置密码后会立即注销该账号的旧会话。</p>
+        </div>
+
+        <div class="account-security-note">
+          <span class="account-security-mark">盾</span>
+          <div>
+            <strong>每位运营人员使用独立账号</strong>
+            <small>不要多人共用总管理员密码。所有创建、停用和密码重置操作都会进入平台审计日志。</small>
+          </div>
+          <span class="status-pill green">安全策略已启用</span>
+        </div>
+
+        <form id="platform-account-form" class="section-card platform-account-create">
+          <div class="form-card-title"><span>新</span><div><h3>新增平台管理员</h3><p>当前阶段统一授予平台总管理员权限</p></div></div>
+          <div class="field-grid platform-account-form-grid">
+            <label>登录账号<input name="loginName" required minlength="4" maxlength="32" pattern="[A-Za-z0-9_]+" placeholder="字母、数字或下划线"></label>
+            <label>管理员名称<input name="displayName" required maxlength="30" placeholder="例如：运营负责人"></label>
+            <label>初始密码<input name="temporaryPassword" type="password" required minlength="8" autocomplete="new-password" placeholder="至少 8 位"></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="primary-action">创建管理员账号</button>
+            <span>创建后状态默认为启用；请通过安全渠道单独发送初始密码。</span>
+          </div>
+        </form>
+
+        <div class="section-card">
+          <div class="section-heading">
+            <div><span>平台成员</span><h2>已创建管理员</h2></div>
+            <p>当前登录账号不可停用自己，平台至少保留一个启用账号。</p>
+          </div>
+          <div id="platform-account-list" class="platform-account-list"></div>
         </div>
       </section>
 
@@ -238,6 +276,6 @@
   </section>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="/admin-config.js"></script>
-  <script src="/admin.js?v=2" type="module"></script>
+  <script src="/admin.js?v=3" type="module"></script>
 </body>
 </html>

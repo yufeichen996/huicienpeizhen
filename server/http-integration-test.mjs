@@ -86,6 +86,36 @@ try {
   assert.equal(adminLogin.response.status, 200)
   const adminToken = adminLogin.payload.data.token
 
+  const currentAdmin = await api('/api/auth/me', { token: adminToken })
+  assert.equal(currentAdmin.response.status, 200)
+  assert.equal(currentAdmin.payload.data.loginName, 'huicien_admin')
+  const platformAccounts = await api('/api/admin/platform-accounts', { token: adminToken })
+  assert.equal(platformAccounts.response.status, 200)
+  assert.equal(platformAccounts.payload.data.length, 1)
+  assert.equal(Object.hasOwn(platformAccounts.payload.data[0], 'passwordHash'), false)
+  const createdPlatformAccount = await api('/api/admin/platform-accounts', {
+    token: adminToken,
+    method: 'POST',
+    body: {
+      loginName: 'http_operation_admin',
+      displayName: 'HTTP 运营管理员',
+      temporaryPassword: 'HttpOperation@2026',
+    },
+  })
+  assert.equal(createdPlatformAccount.response.status, 201)
+  const selfDisable = await api(`/api/admin/platform-accounts/${currentAdmin.payload.data.id}/access`, {
+    token: adminToken,
+    method: 'PUT',
+    body: { accountStatus: 'DISABLED' },
+  })
+  assert.equal(selfDisable.response.status, 409)
+  const disablePlatformAccount = await api(`/api/admin/platform-accounts/${createdPlatformAccount.payload.data.id}/access`, {
+    token: adminToken,
+    method: 'PUT',
+    body: { accountStatus: 'DISABLED' },
+  })
+  assert.equal(disablePlatformAccount.response.status, 200)
+
   const institutionLogin = await api('/api/auth/institution/login', {
     method: 'POST',
     body: { loginName: 'kangyi_admin', password: 'HttpOrg@2026' },
@@ -190,6 +220,7 @@ try {
     institutionIsolation: 'passed',
     adminOrderVisibility: 'passed',
     operationAudit: 'passed',
+    platformAccountManagement: 'passed',
     uploadRestrictions: 'passed',
     logoutRevocation: 'passed',
   }, null, 2))

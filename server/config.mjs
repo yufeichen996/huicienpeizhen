@@ -64,6 +64,8 @@ export const config = Object.freeze({
     'TEST_ADMIN_PASSWORD',
     'Admin@2026!',
   ),
+  bootstrapAdminLoginName: process.env.BOOTSTRAP_ADMIN_LOGIN_NAME || 'huicien_admin',
+  bootstrapAdminDisplayName: process.env.BOOTSTRAP_ADMIN_DISPLAY_NAME || '平台总管理员',
   dataEncryptionKey: process.env.DATA_ENCRYPTION_KEY || 'development-only-data-key',
   projectRoot,
   serverRoot,
