@@ -52,6 +52,8 @@ node --env-file=.env.production scripts/build-portals.mjs
 
 rsync -a --delete dist/institution/ "${ORG_DIR}/"
 rsync -a --delete dist/admin/ "${ADMIN_DIR}/"
+find "${ORG_DIR}" "${ADMIN_DIR}" -type d -exec chmod 755 {} +
+find "${ORG_DIR}" "${ADMIN_DIR}" -type f -exec chmod 644 {} +
 
 pm2 startOrReload deploy/pm2/ecosystem.production.config.cjs --only huicien-api
 pm2 save
